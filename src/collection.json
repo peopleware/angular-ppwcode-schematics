@@ -2,5 +2,10 @@
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "extends": [ "@schematics/angular" ],
   "schematics": {
+    "workspace": {
+      "factory": "./workspace",
+      "description": "Create an Angular workspace.",
+      "hidden": true
+    }
   }
 }
