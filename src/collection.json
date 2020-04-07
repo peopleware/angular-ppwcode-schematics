@@ -6,6 +6,11 @@
       "factory": "./workspace",
       "description": "Create an Angular workspace.",
       "hidden": true
+    },
+    "application": {
+      "aliases": [ "app" ],
+      "factory": "./application",
+      "description": "Create an Angular application."
     }
   }
 }
