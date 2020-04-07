@@ -16,6 +16,7 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "listFiles": true,
+    "listEmittedFiles": true,
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
