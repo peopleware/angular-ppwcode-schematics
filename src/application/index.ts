@@ -4,7 +4,10 @@ import {
   Rule,
 } from '@angular-devkit/schematics';
 
-export default function(options: object): Rule {
+interface ApplicationOptions {
+}
+
+export default function(options: ApplicationOptions): Rule {
   return () => {
     return chain([
       externalSchematic('@schematics/angular', 'application', options),
