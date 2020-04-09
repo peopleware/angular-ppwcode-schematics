@@ -20,6 +20,7 @@ export default function(options: ApplicationOptions): Rule {
     return chain([
       externalSchematic('@schematics/angular', 'application', options),
       removeDuplicateStyle(options),
+      addBuildOptions(options),
     ]);
   };
 }
@@ -54,5 +55,26 @@ function removeDuplicateStyle(options: ApplicationOptions) {
       delete schematics["@schematics/angular:component"];
     }
     extensions.schematics = schematics;
+  });
+}
+
+function addBuildOptions(options: ApplicationOptions) {
+  return updateWorkspace(workspace => {
+    const project = workspace.projects.get(options.name);
+    if (!project) {
+      throw new SchematicsException(`Invalid project name (${options.name})`);
+    }
+    const buildTarget = project.targets.get('build');
+    if (buildTarget === undefined) {
+      throw new SchematicsException("Build target missing (build)");
+    }
+    if (buildTarget.options === undefined) {
+      throw new SchematicsException("Expected build options to be defined");
+    }
+    buildTarget.options['buildOptimizer'] = true;
+    buildTarget.options['extractCss'] = true;
+    buildTarget.options['extractLicenses'] = true;
+    buildTarget.options['optimization'] = true;
+    buildTarget.options['statsJson'] = true;
   });
 }
