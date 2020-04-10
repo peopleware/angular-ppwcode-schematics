@@ -22,6 +22,7 @@ export default function(options: ApplicationOptions): Rule {
       removeDuplicateStyle(options),
       addBuildOptions(options),
       moveBudgets(options),
+      configureBuildConfigurations(options),
     ]);
   };
 }
@@ -103,5 +104,40 @@ function moveBudgets(options: ApplicationOptions) {
     }
     const budgets = buildTarget.configurations.production.budgets;
     buildTarget.options['budgets'] = JSON.parse(JSON.stringify(budgets));
+  });
+}
+
+function configureBuildConfigurations(options: ApplicationOptions) {
+  return updateWorkspace(workspace => {
+    const project = workspace.projects.get(options.name);
+    if (!project) {
+      throw new SchematicsException(`Invalid project name (${options.name})`);
+    }
+    const buildTarget = project.targets.get('build');
+    if (buildTarget === undefined) {
+      throw new SchematicsException("Build target missing (build)");
+    }
+    if (buildTarget.options === undefined) {
+      throw new SchematicsException("Expected build options to be defined");
+    }
+    if (buildTarget.configurations === undefined) {
+      throw new SchematicsException("Expected build configurations to be defined");
+    }
+
+    const configurations = {
+      serve: {
+        aot: false,
+        buildOptimizer: false,
+        optimization: false,
+        extractLicenses: false,
+        statsJson: false,
+        fileReplacements: [{
+          replace: 'src/environments/environment.ts',
+          with: 'src/environments/environment.development.ts',
+        }]
+      }
+    }
+
+    buildTarget.configurations = configurations;
   });
 }
