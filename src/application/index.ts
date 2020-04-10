@@ -49,94 +49,94 @@ function modifyWorkspace(options: ApplicationOptions) {
 }
 
 function removeDuplicateStyle(workspace: WorkspaceDefinition, options: ApplicationOptions) {
-    const project = workspace.projects.get(options.name);
-    if (!project) {
-      throw new SchematicsException(`Invalid project name (${options.name})`);
-    }
-    const extensions = project.extensions;
-    const schematics = JSON.parse(JSON.stringify(extensions.schematics));
-    const component = schematics["@schematics/angular:component"] as JsonObject;
-    if (component["style"] === "scss") {
-      delete component["style"];
-    }
-    if (Object.keys(component).length === 0) {
-      delete schematics["@schematics/angular:component"];
-    }
-    extensions.schematics = schematics;
+  const project = workspace.projects.get(options.name);
+  if (!project) {
+    throw new SchematicsException(`Invalid project name (${options.name})`);
+  }
+  const extensions = project.extensions;
+  const schematics = JSON.parse(JSON.stringify(extensions.schematics));
+  const component = schematics["@schematics/angular:component"] as JsonObject;
+  if (component["style"] === "scss") {
+    delete component["style"];
+  }
+  if (Object.keys(component).length === 0) {
+    delete schematics["@schematics/angular:component"];
+  }
+  extensions.schematics = schematics;
 }
 
 function addBuildOptions(workspace: WorkspaceDefinition, options: ApplicationOptions) {
-    const project = workspace.projects.get(options.name);
-    if (!project) {
-      throw new SchematicsException(`Invalid project name (${options.name})`);
-    }
-    const buildTarget = project.targets.get('build');
-    if (buildTarget === undefined) {
-      throw new SchematicsException("Build target missing (build)");
-    }
-    if (buildTarget.options === undefined) {
-      throw new SchematicsException("Expected build options to be defined");
-    }
-    buildTarget.options['buildOptimizer'] = true;
-    buildTarget.options['extractCss'] = true;
-    buildTarget.options['extractLicenses'] = true;
-    buildTarget.options['optimization'] = true;
-    buildTarget.options['statsJson'] = true;
-    buildTarget.options['outputPath'] = 'dist';
+  const project = workspace.projects.get(options.name);
+  if (!project) {
+    throw new SchematicsException(`Invalid project name (${options.name})`);
+  }
+  const buildTarget = project.targets.get('build');
+  if (buildTarget === undefined) {
+    throw new SchematicsException("Build target missing (build)");
+  }
+  if (buildTarget.options === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  buildTarget.options['buildOptimizer'] = true;
+  buildTarget.options['extractCss'] = true;
+  buildTarget.options['extractLicenses'] = true;
+  buildTarget.options['optimization'] = true;
+  buildTarget.options['statsJson'] = true;
+  buildTarget.options['outputPath'] = 'dist';
 }
 
 // move budgets configuration from configuration.production to build
 function moveBudgets(workspace: WorkspaceDefinition, options: ApplicationOptions) {
-    const project = workspace.projects.get(options.name);
-    if (!project) {
-      throw new SchematicsException(`Invalid project name (${options.name})`);
-    }
-    const buildTarget = project.targets.get('build');
-    if (buildTarget === undefined) {
-      throw new SchematicsException("Build target missing (build)");
-    }
-    if (buildTarget.options === undefined) {
-      throw new SchematicsException("Expected build options to be defined");
-    }
-    if (buildTarget.configurations === undefined) {
-      throw new SchematicsException("Expected build configurations to be defined");
-    }
-    if (buildTarget.configurations.production === undefined) {
-      throw new SchematicsException("Expected build configurations.production to be defined");
-    }
-    const budgets = buildTarget.configurations.production.budgets;
-    buildTarget.options['budgets'] = JSON.parse(JSON.stringify(budgets));
+  const project = workspace.projects.get(options.name);
+  if (!project) {
+    throw new SchematicsException(`Invalid project name (${options.name})`);
+  }
+  const buildTarget = project.targets.get('build');
+  if (buildTarget === undefined) {
+    throw new SchematicsException("Build target missing (build)");
+  }
+  if (buildTarget.options === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  if (buildTarget.configurations === undefined) {
+    throw new SchematicsException("Expected build configurations to be defined");
+  }
+  if (buildTarget.configurations.production === undefined) {
+    throw new SchematicsException("Expected build configurations.production to be defined");
+  }
+  const budgets = buildTarget.configurations.production.budgets;
+  buildTarget.options['budgets'] = JSON.parse(JSON.stringify(budgets));
 }
 
 function configureBuildConfigurations(workspace: WorkspaceDefinition, options: ApplicationOptions) {
-    const project = workspace.projects.get(options.name);
-    if (!project) {
-      throw new SchematicsException(`Invalid project name (${options.name})`);
-    }
-    const buildTarget = project.targets.get('build');
-    if (buildTarget === undefined) {
-      throw new SchematicsException("Build target missing (build)");
-    }
-    if (buildTarget.options === undefined) {
-      throw new SchematicsException("Expected build options to be defined");
-    }
-    if (buildTarget.configurations === undefined) {
-      throw new SchematicsException("Expected build configurations to be defined");
-    }
+  const project = workspace.projects.get(options.name);
+  if (!project) {
+    throw new SchematicsException(`Invalid project name (${options.name})`);
+  }
+  const buildTarget = project.targets.get('build');
+  if (buildTarget === undefined) {
+    throw new SchematicsException("Build target missing (build)");
+  }
+  if (buildTarget.options === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  if (buildTarget.configurations === undefined) {
+    throw new SchematicsException("Expected build configurations to be defined");
+  }
 
-    const configurations = {
-      serve: {
-        aot: false,
-        buildOptimizer: false,
-        optimization: false,
-        extractLicenses: false,
-        statsJson: false,
-        fileReplacements: [{
-          replace: 'src/environments/environment.ts',
-          with: 'src/environments/environment.development.ts',
-        }]
-      }
+  const configurations = {
+    serve: {
+      aot: false,
+      buildOptimizer: false,
+      optimization: false,
+      extractLicenses: false,
+      statsJson: false,
+      fileReplacements: [{
+        replace: 'src/environments/environment.ts',
+        with: 'src/environments/environment.development.ts',
+      }]
     }
+  }
 
-    buildTarget.configurations = configurations;
+  buildTarget.configurations = configurations;
 }
