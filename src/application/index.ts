@@ -76,5 +76,6 @@ function addBuildOptions(options: ApplicationOptions) {
     buildTarget.options['extractLicenses'] = true;
     buildTarget.options['optimization'] = true;
     buildTarget.options['statsJson'] = true;
+    buildTarget.options['outputPath'] = 'dist';
   });
 }
