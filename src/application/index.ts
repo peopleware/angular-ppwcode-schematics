@@ -19,10 +19,7 @@ export default function(options: ApplicationOptions): Rule {
     setStyle(options);
     return chain([
       externalSchematic('@schematics/angular', 'application', options),
-      removeDuplicateStyle(options),
-      addBuildOptions(options),
-      moveBudgets(options),
-      configureBuildConfigurations(options),
+      modifyWorkspace(options),
     ]);
   };
 }
@@ -39,6 +36,15 @@ function setStyle(options: ApplicationOptions) {
     throw new SchematicsException(`Invalid option: style`);
   }
   options.style = 'scss';
+}
+
+function modifyWorkspace(options: ApplicationOptions) {
+  return chain([
+    removeDuplicateStyle(options),
+    addBuildOptions(options),
+    moveBudgets(options),
+    configureBuildConfigurations(options),
+  ]);
 }
 
 function removeDuplicateStyle(options: ApplicationOptions) {
