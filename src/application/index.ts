@@ -6,6 +6,7 @@ import {
 } from '@angular-devkit/schematics';
 import {updateWorkspace} from "@schematics/angular/utility/workspace";
 import {JsonObject} from "@angular-devkit/core";
+import {WorkspaceDefinition} from "@angular-devkit/core/src/workspace";
 
 interface ApplicationOptions {
   routing: boolean;
@@ -39,16 +40,15 @@ function setStyle(options: ApplicationOptions) {
 }
 
 function modifyWorkspace(options: ApplicationOptions) {
-  return chain([
-    removeDuplicateStyle(options),
-    addBuildOptions(options),
-    moveBudgets(options),
-    configureBuildConfigurations(options),
-  ]);
+  return updateWorkspace(workspace => {
+    removeDuplicateStyle(workspace, options);
+    addBuildOptions(workspace, options);
+    moveBudgets(workspace, options);
+    configureBuildConfigurations(workspace, options);
+  });
 }
 
-function removeDuplicateStyle(options: ApplicationOptions) {
-  return updateWorkspace(workspace => {
+function removeDuplicateStyle(workspace: WorkspaceDefinition, options: ApplicationOptions) {
     const project = workspace.projects.get(options.name);
     if (!project) {
       throw new SchematicsException(`Invalid project name (${options.name})`);
@@ -63,11 +63,9 @@ function removeDuplicateStyle(options: ApplicationOptions) {
       delete schematics["@schematics/angular:component"];
     }
     extensions.schematics = schematics;
-  });
 }
 
-function addBuildOptions(options: ApplicationOptions) {
-  return updateWorkspace(workspace => {
+function addBuildOptions(workspace: WorkspaceDefinition, options: ApplicationOptions) {
     const project = workspace.projects.get(options.name);
     if (!project) {
       throw new SchematicsException(`Invalid project name (${options.name})`);
@@ -85,12 +83,10 @@ function addBuildOptions(options: ApplicationOptions) {
     buildTarget.options['optimization'] = true;
     buildTarget.options['statsJson'] = true;
     buildTarget.options['outputPath'] = 'dist';
-  });
 }
 
 // move budgets configuration from configuration.production to build
-function moveBudgets(options: ApplicationOptions) {
-  return updateWorkspace(workspace => {
+function moveBudgets(workspace: WorkspaceDefinition, options: ApplicationOptions) {
     const project = workspace.projects.get(options.name);
     if (!project) {
       throw new SchematicsException(`Invalid project name (${options.name})`);
@@ -110,11 +106,9 @@ function moveBudgets(options: ApplicationOptions) {
     }
     const budgets = buildTarget.configurations.production.budgets;
     buildTarget.options['budgets'] = JSON.parse(JSON.stringify(budgets));
-  });
 }
 
-function configureBuildConfigurations(options: ApplicationOptions) {
-  return updateWorkspace(workspace => {
+function configureBuildConfigurations(workspace: WorkspaceDefinition, options: ApplicationOptions) {
     const project = workspace.projects.get(options.name);
     if (!project) {
       throw new SchematicsException(`Invalid project name (${options.name})`);
@@ -145,5 +139,4 @@ function configureBuildConfigurations(options: ApplicationOptions) {
     }
 
     buildTarget.configurations = configurations;
-  });
 }
