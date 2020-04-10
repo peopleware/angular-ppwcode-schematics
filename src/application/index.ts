@@ -21,6 +21,7 @@ export default function(options: ApplicationOptions): Rule {
       externalSchematic('@schematics/angular', 'application', options),
       removeDuplicateStyle(options),
       addBuildOptions(options),
+      moveBudgets(options),
     ]);
   };
 }
@@ -77,5 +78,30 @@ function addBuildOptions(options: ApplicationOptions) {
     buildTarget.options['optimization'] = true;
     buildTarget.options['statsJson'] = true;
     buildTarget.options['outputPath'] = 'dist';
+  });
+}
+
+// move budgets configuration from configuration.production to build
+function moveBudgets(options: ApplicationOptions) {
+  return updateWorkspace(workspace => {
+    const project = workspace.projects.get(options.name);
+    if (!project) {
+      throw new SchematicsException(`Invalid project name (${options.name})`);
+    }
+    const buildTarget = project.targets.get('build');
+    if (buildTarget === undefined) {
+      throw new SchematicsException("Build target missing (build)");
+    }
+    if (buildTarget.options === undefined) {
+      throw new SchematicsException("Expected build options to be defined");
+    }
+    if (buildTarget.configurations === undefined) {
+      throw new SchematicsException("Expected build configurations to be defined");
+    }
+    if (buildTarget.configurations.production === undefined) {
+      throw new SchematicsException("Expected build configurations.production to be defined");
+    }
+    const budgets = buildTarget.configurations.production.budgets;
+    buildTarget.options['budgets'] = JSON.parse(JSON.stringify(budgets));
   });
 }
