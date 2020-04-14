@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsAngularApp",
+  "title": "Angular Application Options Schema",
+  "type": "object",
+  "description": "Generates a new PPWCode app definition in the \"projects\" subfolder of the workspace.",
+  "properties": {
+  }
+}

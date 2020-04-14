@@ -10,6 +10,7 @@
     "application": {
       "aliases": [ "app" ],
       "factory": "./application",
+      "schema": "./application/schema.json",
       "description": "Create an Angular application."
     }
   }
