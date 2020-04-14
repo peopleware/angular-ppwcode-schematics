@@ -7,6 +7,7 @@ import {
 import {updateWorkspace} from "@schematics/angular/utility/workspace";
 import {JsonObject} from "@angular-devkit/core";
 import {ProjectDefinition} from "@angular-devkit/core/src/workspace";
+import {cloneDeep} from "lodash";
 
 interface ApplicationOptions {
   routing: boolean;
@@ -54,7 +55,7 @@ function modifyWorkspace(options: ApplicationOptions) {
 
 function removeDuplicateStyle(project: ProjectDefinition) {
   const extensions = project.extensions;
-  const schematics = JSON.parse(JSON.stringify(extensions.schematics));
+  const schematics = cloneDeep(extensions.schematics) as JsonObject;
   const component = schematics["@schematics/angular:component"] as JsonObject;
   if (component["style"] === "scss") {
     delete component["style"];
@@ -97,7 +98,7 @@ function moveBudgets(project: ProjectDefinition) {
     throw new SchematicsException("Expected build configurations.production to be defined");
   }
   const budgets = buildTarget.configurations.production.budgets;
-  buildTarget.options['budgets'] = JSON.parse(JSON.stringify(budgets));
+  buildTarget.options['budgets'] = cloneDeep(budgets);
 }
 
 function configureBuildConfigurations(project: ProjectDefinition) {
