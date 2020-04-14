@@ -113,7 +113,7 @@ function configureBuildConfigurations(project: ProjectDefinition) {
     throw new SchematicsException("Expected build configurations to be defined");
   }
 
-  const configurations = {
+  buildTarget.configurations  = {
     serve: {
       aot: false,
       buildOptimizer: false,
@@ -125,7 +125,5 @@ function configureBuildConfigurations(project: ProjectDefinition) {
         with: 'src/environments/environment.development.ts',
       }]
     }
-  }
-
-  buildTarget.configurations = configurations;
+  };
 }
