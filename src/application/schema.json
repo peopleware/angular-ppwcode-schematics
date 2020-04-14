@@ -5,5 +5,14 @@
   "type": "object",
   "description": "Generates a new PPWCode app definition in the \"projects\" subfolder of the workspace.",
   "properties": {
+    "name": {
+      "description": "The name of the new app.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the application?"
+    }
   }
 }
