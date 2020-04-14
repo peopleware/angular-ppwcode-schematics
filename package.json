@@ -16,6 +16,8 @@
     "@angular-devkit/core": "^9.1.0",
     "@angular-devkit/schematics": "^9.1.0",
     "@schematics/angular": "^9.1.0",
+    "@types/lodash": "^4.14.149",
+    "lodash": "^4.14.2",
     "typescript": "~3.8.2"
   },
   "devDependencies": {
