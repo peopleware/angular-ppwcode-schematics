@@ -1,7 +1,7 @@
 {
   "name": "ppwcode-angular-schematics",
   "version": "0.0.0",
-  "description": "A blank schematics",
+  "description": "PPWCode Angular Schematics",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jasmine src/**/*_spec.js"
@@ -9,8 +9,11 @@
   "keywords": [
     "schematics"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": {
+    "name": "Adriaan Peeters",
+    "email": "adriaan_peeters@peopleware.be"
+  },
+  "license": "Apache-2.0",
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "^9.1.0",
