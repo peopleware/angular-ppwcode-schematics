@@ -9,7 +9,7 @@ import {JsonObject} from "@angular-devkit/core";
 import {ProjectDefinition} from "@angular-devkit/core/src/workspace";
 import {cloneDeep} from "lodash";
 
-interface ApplicationOptions {
+export interface ApplicationOptions {
   routing?: boolean;
   style?: string;
   name: string;
