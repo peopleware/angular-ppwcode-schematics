@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "PPWCode Angular Schematics",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "npm run build:compile && npm run build:copy",
+    "build:compile": "tsc -p tsconfig.json",
+    "build:copy": "copyfiles -u 1 ./src/**.template ./src/**.json dist",
     "test": "npm run build && jasmine src/**/*_spec.js"
   },
   "keywords": [

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
     "baseUrl": "tsconfig",
     "lib": [
       "es2018",
