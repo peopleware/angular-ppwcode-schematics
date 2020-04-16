@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run build:compile && npm run build:copy",
     "build:compile": "tsc -p tsconfig.json",
-    "build:copy": "copyfiles -u 1 ./src/**.template ./src/**.json dist",
+    "build:copy": "copyfiles -u 1 ./src/**.template ./src/**.json dist && copyfiles package.json dist",
     "test": "npm run build && jasmine src/**/*_spec.js"
   },
   "keywords": [
