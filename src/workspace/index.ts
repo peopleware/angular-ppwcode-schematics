@@ -21,6 +21,7 @@ export default function(options: ApplicationOptions): Rule {
     return chain([
       externalSchematic('@schematics/angular', 'workspace', options),
       setStyle(options),
+      setDefaultCollection(),
       mergeWith(apply(url('./files'), [
         applyTemplates({
           utils: strings,
@@ -43,5 +44,13 @@ function setStyle(options: ApplicationOptions): Rule {
 
   return updateWorkspace(workspace => {
     workspace.extensions.schematics = schematics;
+  });
+}
+
+function setDefaultCollection(): Rule {
+  return updateWorkspace(workspace => {
+    const cliOptions: JsonObject = {};
+    cliOptions.defaultCollection = "ppwcode-angular-schematics";
+    workspace.extensions.cli = cliOptions;
   });
 }
