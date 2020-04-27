@@ -14,6 +14,7 @@ export interface ApplicationOptions {
   routing?: boolean;
   style?: string;
   name: string;
+  skipInstall?: boolean;
 }
 
 export default function(options: ApplicationOptions): Rule {
