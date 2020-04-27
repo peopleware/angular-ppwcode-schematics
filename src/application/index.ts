@@ -33,9 +33,6 @@ function setRouting(options: ApplicationOptions) {
 }
 
 function setStyle(options: ApplicationOptions) {
-  if (options.style !== undefined) {
-    throw new SchematicsException(`Invalid option: style`);
-  }
   options.style = 'scss';
 }
 
