@@ -2,6 +2,12 @@
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "extends": [ "@schematics/angular" ],
   "schematics": {
+    "ng-new": {
+      "factory": "./ng-new",
+      "schema": "./ng-new/schema.json",
+      "description": "Create an Angular ng-new.",
+      "hidden": true
+    },
     "workspace": {
       "factory": "./workspace",
       "description": "Create an Angular workspace.",
