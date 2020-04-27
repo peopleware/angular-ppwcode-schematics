@@ -7,10 +7,12 @@ import {
   mergeWith,
   Rule,
   SchematicsException,
+  Tree,
   url,
 } from '@angular-devkit/schematics';
 import {JsonObject, strings} from "@angular-devkit/core";
 import {updateWorkspace} from "@schematics/angular/utility/workspace";
+import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/utility/dependencies";
 
 interface ApplicationOptions {
     style: string;
@@ -29,6 +31,7 @@ export default function(options: ApplicationOptions): Rule {
           'dot': '.'
         }),
       ]), MergeStrategy.AllowCreationConflict),
+      addDependenciesToPackageJson(),
     ]);
   };
 }
@@ -53,4 +56,18 @@ function setDefaultCollection(): Rule {
     cliOptions.defaultCollection = "ppwcode-angular-schematics";
     workspace.extensions.cli = cliOptions;
   });
+}
+
+function addDependenciesToPackageJson() {
+  return (host: Tree) => {
+    [
+      {
+        type: NodeDependencyType.Dev,
+        name: 'ppwcode-angular-schematics',
+        version: '0.0.0',
+      },
+    ].forEach(dependency => addPackageJsonDependency(host, dependency));
+
+    return host;
+  };
 }
