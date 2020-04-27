@@ -14,7 +14,7 @@ import {JsonObject, strings} from "@angular-devkit/core";
 import {updateWorkspace} from "@schematics/angular/utility/workspace";
 import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/utility/dependencies";
 
-interface WorkspaceOptions {
+export interface WorkspaceOptions {
     style: string;
 }
 
