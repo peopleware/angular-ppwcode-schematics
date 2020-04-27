@@ -6,7 +6,6 @@ import {
   MergeStrategy,
   mergeWith,
   Rule,
-  SchematicsException,
   Tree,
   url,
 } from '@angular-devkit/schematics';
@@ -16,14 +15,13 @@ import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/
 
 export interface WorkspaceOptions {
     name?: string;
-    style: string;
 }
 
 export default function(options: WorkspaceOptions): Rule {
   return () => {
     return chain([
       externalSchematic('@schematics/angular', 'workspace', options),
-      setStyle(options),
+      setStyle(),
       setDefaultCollection(),
       mergeWith(apply(url('./files'), [
         applyTemplates({
@@ -37,10 +35,7 @@ export default function(options: WorkspaceOptions): Rule {
   };
 }
 
-function setStyle(options: WorkspaceOptions): Rule {
-  if (options.style !== undefined) {
-    throw new SchematicsException(`Invalid option: style`);
-  }
+function setStyle(): Rule {
   const schematics: JsonObject = {};
   const componentSchematicsOptions: JsonObject = {};
   componentSchematicsOptions.style = 'scss';
