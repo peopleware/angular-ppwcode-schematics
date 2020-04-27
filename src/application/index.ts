@@ -10,6 +10,7 @@ import {ProjectDefinition} from "@angular-devkit/core/src/workspace";
 import {cloneDeep} from "lodash";
 
 export interface ApplicationOptions {
+  projectRoot?: string,
   routing?: boolean;
   style?: string;
   name: string;
