@@ -19,7 +19,6 @@ export default function(options: any): Rule {
 
   const workspaceOptions: WorkspaceOptions = {
     name: options.name,
-    style: options.style,
   };
 
   const applicationOptions: ApplicationOptions = {
