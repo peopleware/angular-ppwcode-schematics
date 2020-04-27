@@ -13,6 +13,11 @@
         "index": 0
       },
       "x-prompt": "What name would you like to use for the new workspace and initial project?"
+    },
+    "skipInstall": {
+      "description": "When true, does not install dependency packages.",
+      "type": "boolean",
+      "default": true
     }
   }
 }
