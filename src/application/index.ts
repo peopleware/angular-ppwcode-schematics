@@ -29,9 +29,6 @@ export default function(options: ApplicationOptions): Rule {
 }
 
 function setRouting(options: ApplicationOptions) {
-  if (options.routing !== undefined) {
-    throw new SchematicsException(`Invalid option: routing`);
-  }
   options.routing = true;
 }
 
