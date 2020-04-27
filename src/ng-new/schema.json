@@ -18,6 +18,16 @@
       "description": "When true, does not install dependency packages.",
       "type": "boolean",
       "default": true
+    },
+    "prefix": {
+      "type": "string",
+      "format": "html-selector",
+      "description": "The prefix to apply to generated selectors for the initial project.",
+      "minLength": 1,
+      "x-prompt": "What prefix would you like to use for the generated selectors in the initial project?"
     }
-  }
+  },
+  "required": [
+    "prefix"
+  ]
 }
