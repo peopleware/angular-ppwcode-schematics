@@ -10,6 +10,7 @@
     },
     "workspace": {
       "factory": "./workspace",
+      "schema": "./workspace/schema.json",
       "description": "Create an Angular workspace.",
       "hidden": true
     },
