@@ -15,6 +15,7 @@ export interface ApplicationOptions {
   style?: string;
   name: string;
   skipInstall?: boolean;
+  prefix?: string;
 }
 
 export default function(options: ApplicationOptions): Rule {

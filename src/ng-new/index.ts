@@ -25,6 +25,7 @@ export default function(options: any): Rule {
     projectRoot: '',
     name: options.name,
     skipInstall: true,
+    prefix: options.prefix,
   };
 
   return () => {
