@@ -14,11 +14,11 @@ import {JsonObject, strings} from "@angular-devkit/core";
 import {updateWorkspace} from "@schematics/angular/utility/workspace";
 import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/utility/dependencies";
 
-interface ApplicationOptions {
+interface WorkspaceOptions {
     style: string;
 }
 
-export default function(options: ApplicationOptions): Rule {
+export default function(options: WorkspaceOptions): Rule {
   return () => {
     return chain([
       externalSchematic('@schematics/angular', 'workspace', options),
@@ -36,7 +36,7 @@ export default function(options: ApplicationOptions): Rule {
   };
 }
 
-function setStyle(options: ApplicationOptions): Rule {
+function setStyle(options: WorkspaceOptions): Rule {
   if (options.style !== undefined) {
     throw new SchematicsException(`Invalid option: style`);
   }
