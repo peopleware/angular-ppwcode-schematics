@@ -15,6 +15,7 @@ import {updateWorkspace} from "@schematics/angular/utility/workspace";
 import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/utility/dependencies";
 
 export interface WorkspaceOptions {
+    name?: string;
     style: string;
 }
 
