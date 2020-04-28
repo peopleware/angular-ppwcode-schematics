@@ -61,7 +61,7 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: '@ppwcode/angular-schematics',
-        version: '0.0.0',
+        version: '0.1.0',
       },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
