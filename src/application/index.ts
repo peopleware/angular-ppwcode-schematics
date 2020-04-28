@@ -15,6 +15,7 @@ import {ProjectDefinition} from "@angular-devkit/core/src/workspace";
 import {cloneDeep} from "lodash";
 import {relativePathToWorkspaceRoot} from "@schematics/angular/utility/paths";
 import {MergeStrategy} from "@angular-devkit/schematics/src/tree/interface";
+import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/utility/dependencies";
 
 export interface ApplicationOptions {
   projectRoot?: string,
@@ -47,6 +48,7 @@ export default function(options: ApplicationOptions): Rule {
           }),
           move(appDir),
         ]), MergeStrategy.AllowCreationConflict),
+      addDependenciesToPackageJson(),
     ]);
   };
 }
@@ -144,5 +146,19 @@ function configureBuildConfigurations(project: ProjectDefinition) {
         with: 'src/environments/environment.development.ts',
       }]
     }
+  };
+}
+
+function addDependenciesToPackageJson() {
+  return (host: Tree) => {
+    [
+      {
+        type: NodeDependencyType.Dev,
+        name: 'karma-spec-reporter',
+        version: '0.0.32',
+      },
+    ].forEach(dependency => addPackageJsonDependency(host, dependency));
+
+    return host;
   };
 }
