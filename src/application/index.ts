@@ -1,13 +1,20 @@
 import {
+  apply,
+  applyTemplates,
   chain,
   externalSchematic,
+  mergeWith,
+  move,
   Rule,
   SchematicsException,
+  Tree, url,
 } from '@angular-devkit/schematics';
-import {updateWorkspace} from "@schematics/angular/utility/workspace";
-import {JsonObject} from "@angular-devkit/core";
+import {getWorkspace, updateWorkspace} from "@schematics/angular/utility/workspace";
+import {join, JsonObject, normalize} from "@angular-devkit/core";
 import {ProjectDefinition} from "@angular-devkit/core/src/workspace";
 import {cloneDeep} from "lodash";
+import {relativePathToWorkspaceRoot} from "@schematics/angular/utility/paths";
+import {MergeStrategy} from "@angular-devkit/schematics/src/tree/interface";
 
 export interface ApplicationOptions {
   projectRoot?: string,
@@ -19,12 +26,27 @@ export interface ApplicationOptions {
 }
 
 export default function(options: ApplicationOptions): Rule {
-  return () => {
+  return async (host: Tree) => {
+    const workspace = await getWorkspace(host);
+    const newProjectRoot = workspace.extensions.newProjectRoot as (string | undefined) || '';
+    const isRootApp = options.projectRoot !== undefined;
+    const appDir = isRootApp
+      ? options.projectRoot as string
+      : join(normalize(newProjectRoot), options.name);
+
     setRouting(options);
     setStyle(options);
     return chain([
       externalSchematic('@schematics/angular', 'application', options),
       modifyWorkspace(options),
+      mergeWith(
+        apply(url('./files'), [
+          applyTemplates({
+            relativePathToWorkspaceRoot: relativePathToWorkspaceRoot(appDir),
+            appName: options.name,
+          }),
+          move(appDir),
+        ]), MergeStrategy.AllowCreationConflict),
     ]);
   };
 }
