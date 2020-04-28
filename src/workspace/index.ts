@@ -15,6 +15,7 @@ import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/
 
 export interface WorkspaceOptions {
     name?: string;
+    version?: string,
 }
 
 export default function(options: WorkspaceOptions): Rule {

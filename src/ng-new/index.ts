@@ -19,6 +19,7 @@ export default function(options: any): Rule {
 
   const workspaceOptions: WorkspaceOptions = {
     name: options.name,
+    version: options.version,
   };
 
   const applicationOptions: ApplicationOptions = {
