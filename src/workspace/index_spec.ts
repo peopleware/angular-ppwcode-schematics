@@ -34,7 +34,7 @@ describe('Workspace Schematic', () => {
   it('should set default collection', async () => {
     const tree = await schematicRunner.runSchematicAsync('workspace', defaultOptions).toPromise();
     const config = JSON.parse(tree.readContent('/angular.json'));
-    expect(config.cli.defaultCollection).toEqual('ppwcode-angular-schematics');
+    expect(config.cli.defaultCollection).toEqual('@ppwcode/angular-schematics');
   });
 
 });

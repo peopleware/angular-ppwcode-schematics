@@ -1,5 +1,5 @@
 {
-  "name": "ppwcode-angular-schematics",
+  "name": "@ppwcode/angular-schematics",
   "version": "0.0.0",
   "description": "PPWCode Angular Schematics",
   "scripts": {

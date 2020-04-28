@@ -50,7 +50,7 @@ function setStyle(): Rule {
 function setDefaultCollection(): Rule {
   return updateWorkspace(workspace => {
     const cliOptions: JsonObject = {};
-    cliOptions.defaultCollection = "ppwcode-angular-schematics";
+    cliOptions.defaultCollection = "@ppwcode/angular-schematics";
     workspace.extensions.cli = cliOptions;
   });
 }
@@ -60,7 +60,7 @@ function addDependenciesToPackageJson() {
     [
       {
         type: NodeDependencyType.Dev,
-        name: 'ppwcode-angular-schematics',
+        name: '@ppwcode/angular-schematics',
         version: '0.0.0',
       },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
