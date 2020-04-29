@@ -157,6 +157,14 @@ function addDependenciesToPackageJson() {
         type: NodeDependencyType.Dev,
         name: 'karma-spec-reporter',
         version: '0.0.32',
+      }, {
+        type: NodeDependencyType.Dev,
+        name: 'angular-tslint-rules',
+        version: '1.20.4',
+      }, {
+        type: NodeDependencyType.Dev,
+        name: 'tslint-config-prettier',
+        version: '1.18.0',
       },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
