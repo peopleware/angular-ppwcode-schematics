@@ -45,6 +45,7 @@ export default function(options: ApplicationOptions): Rule {
           applyTemplates({
             relativePathToWorkspaceRoot: relativePathToWorkspaceRoot(appDir),
             appName: options.name,
+            prefix: options.prefix,
           }),
           move(appDir),
         ]), MergeStrategy.AllowCreationConflict),
