@@ -1,5 +1,8 @@
 import {
+  apply,
   chain,
+  empty,
+  mergeWith,
   move,
   Rule,
   schematic,
@@ -31,9 +34,13 @@ export default function(options: any): Rule {
 
   return () => {
     return chain([
-      schematic('workspace', workspaceOptions),
-      schematic('application', applicationOptions),
-      move(options.directory),
+      mergeWith(
+          apply(empty(), [
+            schematic('workspace', workspaceOptions),
+            schematic('application', applicationOptions),
+            move(options.directory),
+          ]),
+      ),
     ]);
   };
 }
