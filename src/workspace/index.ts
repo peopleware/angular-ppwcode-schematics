@@ -63,6 +63,11 @@ function addDependenciesToPackageJson() {
         name: '@ppwcode/angular-schematics',
         version: '0.1.1',
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'prettier',
+        version: '2.0.5',
+      },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
