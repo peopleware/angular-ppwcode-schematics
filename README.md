@@ -1,15 +1,21 @@
-# Getting Started With Schematics
+# Getting Started With ppwcode schematics
 
-This repository is a basic Schematic implementation that serves as a starting point to create and publish Schematics to NPM.
+This repository is a ppwcode schematic implementation 
+that serves as a starting point to create a ppwcode compliant Angular repository.
 
-### Testing
+### Usage as package
 
-To test locally, install `@angular-devkit/schematics-cli` globally and use the `schematics` command line tool. That tool acts the same as the `generate` command of the Angular CLI, but also has a debug mode.
+To generate an Angular project with ppw compliant configurations
+1. Run `npm install -g @ppwcode/angular-schematics`.
+2. Go to your desired directory by running: `cd ./to/your/desired/directory`
+2. Run `ng new --collection=@ppwcode/angular-schematics`
 
-Check the documentation with
-```bash
-schematics --help
-```
+### Dev workflow
+
+If you want to test the development code follow the following steps:
+1. Run `npm run build` in this project
+2. Go to your desired directory by running: `cd ./to/your/desired/directory`
+3. Run `ng new test --collection=<path_to_this_repo>/dist/collection.json`
 
 ### Unit Testing
 
@@ -25,4 +31,3 @@ npm publish
 ```
 
 That's it!
- 
