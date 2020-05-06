@@ -72,6 +72,7 @@ function modifyWorkspace(options: ApplicationOptions) {
     addBuildOptions(project);
     moveBudgets(project);
     configureBuildConfigurations(project);
+    addTestOptions(project);
   });
 }
 
@@ -102,6 +103,17 @@ function addBuildOptions(project: ProjectDefinition) {
   buildTarget.options['optimization'] = true;
   buildTarget.options['statsJson'] = true;
   buildTarget.options['outputPath'] = 'dist';
+}
+
+function addTestOptions(project: ProjectDefinition) {
+  const testTarget = project.targets.get('test');
+  if (testTarget === undefined) {
+    throw new SchematicsException("Build target missing (build)");
+  }
+  if (testTarget.options === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  testTarget.options['codeCoverage'] = true;
 }
 
 // move budgets configuration from configuration.production to build
