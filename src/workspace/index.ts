@@ -32,6 +32,7 @@ export default function(options: WorkspaceOptions): Rule {
         }),
       ]), MergeStrategy.AllowCreationConflict),
       addDependenciesToPackageJson(),
+      updateScriptsToPackageJson(),
     ]);
   };
 }
@@ -68,8 +69,34 @@ function addDependenciesToPackageJson() {
         name: 'prettier',
         version: '2.0.5',
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'cross-env',
+        version: '7.0.2'
+      },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
   };
+}
+
+function updateScriptsToPackageJson(): Rule {
+  return (host: Tree): Tree => {
+    const path = `/package.json`;
+    const file = host.read(path);
+    const json = JSON.parse(file!.toString());
+    delete json.scripts.lint;
+    json.scripts = {
+      ...json.scripts,
+      "build": "npm run lint:prettier && npm run lint:lint && npm run test && ng build",
+      "lint:prettier": "cross-env prettier --check '**/*.ts' '**/*.md' '**/*.js' '**/*.html' '**/*.scss'",
+      "format:prettier": "cross-env prettier --write '**/*.ts' '**/*.md' '**/*.js' '**/*.html' '**/*.scss'",
+      "test": "ng test --watch=false",
+      "lint:lint": "ng lint",
+      "format:lint": "ng lint --fix",
+    };
+    host.overwrite(path, JSON.stringify(json, null, 2));
+
+    return host;
+  }
 }
