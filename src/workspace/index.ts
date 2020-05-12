@@ -69,6 +69,11 @@ function addDependenciesToPackageJson() {
         name: 'prettier',
         version: '2.0.5',
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'cross-env',
+        version: '7.0.2'
+      },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
