@@ -73,6 +73,7 @@ function modifyWorkspace(options: ApplicationOptions) {
     moveBudgets(project);
     configureBuildConfigurations(project);
     addTestOptions(project);
+    updateServeOptions(project);
   });
 }
 
@@ -103,6 +104,19 @@ function addBuildOptions(project: ProjectDefinition) {
   buildTarget.options['optimization'] = true;
   buildTarget.options['statsJson'] = true;
   buildTarget.options['outputPath'] = 'dist';
+}
+
+function updateServeOptions(project: ProjectDefinition) {
+  const targets = project.targets;
+  const serveTarget = targets.get('serve');
+  if (serveTarget === undefined) {
+    throw new SchematicsException("Build target missing (serve)");
+  }
+  if (serveTarget.options === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  serveTarget.options['browserTarget'] = serveTarget.options['browserTarget'] + ':serve';
+  delete serveTarget["configurations"];
 }
 
 function addTestOptions(project: ProjectDefinition) {
