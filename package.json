@@ -22,12 +22,12 @@
   },
   "schematics": "./collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^9.1.3",
-    "@angular-devkit/schematics": "^9.1.3",
-    "@schematics/angular": "^9.1.3",
+    "@angular-devkit/core": "^10.1.0",
+    "@angular-devkit/schematics": "^10.1.0",
+    "@schematics/angular": "^10.1.0",
     "@types/lodash": "^4.14.150",
     "lodash": "^4.17.15",
-    "typescript": "~3.8.2"
+    "typescript": "~3.9.7"
   },
   "devDependencies": {
     "@types/node": "^12.11.1",
