@@ -108,7 +108,7 @@ function addBuildOptions(project: ProjectDefinition) {
 function addTestOptions(project: ProjectDefinition) {
   const testTarget = project.targets.get('test');
   if (testTarget === undefined) {
-    throw new SchematicsException("Build target missing (build)");
+    throw new SchematicsException("Build target missing (test)");
   }
   if (testTarget.options === undefined) {
     throw new SchematicsException("Expected build options to be defined");
