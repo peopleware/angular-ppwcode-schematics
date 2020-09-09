@@ -102,4 +102,16 @@ describe('Application Schematic', () => {
     expect(configurations.serve.fileReplacements[0].with).toEqual('src/environments/environment.development.ts');
   });
 
+  it('should configure test options', async () => {
+    const options = { ...defaultOptions };
+
+    const tree = await schematicRunner.runSchematicAsync('application', options, workspaceTree)
+      .toPromise();
+    const config = JSON.parse(tree.readContent('/angular.json'));
+    const prj = config.projects.foo;
+    const testOptions = prj.architect.test.options;
+    expect(testOptions).toBeDefined();
+    expect(testOptions.codeCoverage).toBeTrue();
+  });
+
 });
