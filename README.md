@@ -23,11 +23,4 @@ If you want to test the development code follow the following steps:
 
 ### Publishing
 
-To publish, simply do:
-
-```bash
-npm run build
-npm publish
-```
-
-That's it!
+Publishing is performed by the GitHub workflow.
