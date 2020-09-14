@@ -98,8 +98,7 @@ describe('Application Schematic', () => {
     expect(configurations.serve.optimization).toBeFalse();
     expect(configurations.serve.extractLicenses).toBeFalse();
     expect(configurations.serve.statsJson).toBeFalse();
-    expect(configurations.serve.fileReplacements[0].replace).toEqual('src/environments/environment.ts');
-    expect(configurations.serve.fileReplacements[0].with).toEqual('src/environments/environment.development.ts');
+    expect(configurations.serve.fileReplacements).toBeUndefined();
   });
 
   it('should configure test options', async () => {

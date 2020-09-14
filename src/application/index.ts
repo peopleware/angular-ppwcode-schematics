@@ -50,6 +50,7 @@ export default function(options: ApplicationOptions): Rule {
           move(appDir),
         ]), MergeStrategy.AllowCreationConflict),
       addDependenciesToPackageJson(),
+      removeEnvironments(appDir),
     ]);
   };
 }
@@ -167,11 +168,7 @@ function configureBuildConfigurations(project: ProjectDefinition) {
       buildOptimizer: false,
       optimization: false,
       extractLicenses: false,
-      statsJson: false,
-      fileReplacements: [{
-        replace: 'src/environments/environment.ts',
-        with: 'src/environments/environment.development.ts',
-      }]
+      statsJson: false
     }
   };
 }
@@ -198,4 +195,12 @@ function addDependenciesToPackageJson() {
 
     return host;
   };
+}
+
+function removeEnvironments(appDir: string) {
+  return (host: Tree) => {
+    host.delete(appDir + '/src/environments/environment.ts');
+    host.delete(appDir + '/src/environments/environment.prod.ts');
+    return host;
+  }
 }
