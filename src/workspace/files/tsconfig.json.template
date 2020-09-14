@@ -12,7 +12,7 @@
     "incremental": true,
     "listFiles": true,
     "listEmittedFiles": true,
-    "module": "esnext",
+    "module": "es2020",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
