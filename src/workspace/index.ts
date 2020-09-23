@@ -74,6 +74,11 @@ function addDependenciesToPackageJson() {
         name: 'cross-env',
         version: '7.0.2'
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'husky',
+        version: '4.3.0'
+      },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
@@ -94,6 +99,11 @@ function updateScriptsToPackageJson(): Rule {
       "test": "ng test --watch=false",
       "lint:lint": "ng lint",
       "format:lint": "ng lint --fix",
+    };
+    json.husky = {
+      "hooks": {
+        "pre-push": "npm run lint:prettier && npm run lint:lint",
+      }
     };
     host.overwrite(path, JSON.stringify(json, null, 2));
 
