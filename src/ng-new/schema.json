@@ -17,6 +17,11 @@
     "prefix": {
       "type": "string",
       "description": "The prefix to apply to generated selectors for the initial project."
+    },
+    "createApplication": {
+      "description": "When true (the default), creates a new initial application project in the src folder of the new workspace. When false, creates an empty workspace with no initial app. You can then use the generate application command so that all apps are created in the projects folder.",
+      "type": "boolean",
+      "default": true
     }
   },
   "required": [

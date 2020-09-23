@@ -4,6 +4,7 @@ import {
   empty,
   mergeWith,
   move,
+  noop,
   Rule,
   schematic,
   SchematicsException,
@@ -37,7 +38,7 @@ export default function(options: any): Rule {
       mergeWith(
           apply(empty(), [
             schematic('workspace', workspaceOptions),
-            schematic('application', applicationOptions),
+            options.createApplication ? schematic('application', applicationOptions) : noop,
             move(options.directory),
           ]),
       ),
