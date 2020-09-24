@@ -17,6 +17,7 @@ describe('Application Schematic', () => {
     name: 'foo',
     routing: undefined,
     style: undefined,
+    prefix: 'ppw',
   };
 
   let workspaceTree: UnitTestTree;
