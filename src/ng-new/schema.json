@@ -13,6 +13,10 @@
         "index": 0
       },
       "x-prompt": "What name would you like to use for the new workspace and initial project?"
+    },
+    "prefix": {
+      "type": "string",
+      "description": "The prefix to apply to generated selectors for the initial project."
     }
   },
   "required": [
