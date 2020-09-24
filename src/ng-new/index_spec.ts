@@ -9,7 +9,7 @@ describe('Ng New Schematic', () => {
     name: 'foo',
     directory: 'bar',
     version: '6.0.0',
-    prefix: 'ppw',
+    prefix: 'ngnew',
   };
 
   it('should create files of a workspace', async () => {
@@ -35,7 +35,7 @@ describe('Ng New Schematic', () => {
   it('should should set the prefix in angular.json and in app.component.ts', async () => {
     const tree = await schematicRunner.runSchematicAsync('ng-new', defaultOptions).toPromise();
     const content = tree.readContent('/bar/angular.json');
-    expect(content).toMatch(/"prefix": "ppw"/);
+    expect(content).toMatch(/"prefix": "ngnew"/);
   });
 
 });

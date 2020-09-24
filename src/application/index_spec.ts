@@ -17,7 +17,7 @@ describe('Application Schematic', () => {
     name: 'foo',
     routing: undefined,
     style: undefined,
-    prefix: 'ppw',
+    prefix: 'application',
   };
 
   let workspaceTree: UnitTestTree;
@@ -126,6 +126,15 @@ describe('Application Schematic', () => {
     expect(serveOptions.browserTarget).toEqual("foo:build:serve");
     const serveConfigurations = prj.architect.serve.configurations;
     expect(serveConfigurations).toBeUndefined();
+  });
+
+  it('should should set the prefix in angular.json and in app.component.ts', async () => {
+    const options = { ...defaultOptions };
+
+    const tree = await schematicRunner.runSchematicAsync('application', options, workspaceTree)
+      .toPromise();
+    const content = tree.readContent('/angular.json');
+    expect(content).toMatch(/"prefix": "application"/);
   });
 
 });
