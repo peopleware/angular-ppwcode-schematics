@@ -10,6 +10,7 @@ describe('Ng New Schematic', () => {
     directory: 'bar',
     version: '6.0.0',
     prefix: 'ngnew',
+    createApplication: true,
   };
 
   it('should create files of a workspace', async () => {
@@ -30,6 +31,21 @@ describe('Ng New Schematic', () => {
       '/bar/e2e/tsconfig.json',
       '/bar/e2e/protractor.conf.js',
     ]));
+  });
+
+  it('should not create files of an application', async () => {
+    const options = { ...defaultOptions };
+    options.createApplication = false;
+
+    const tree = await schematicRunner.runSchematicAsync('ng-new', options).toPromise();
+    const files = tree.files;
+    expect(files).not.toContain('/bar/tsconfig.app.json');
+    expect(files).not.toContain('/bar/src/main.ts');
+    expect(files).not.toContain('/bar/src/app/app.module.ts');
+    expect(files).not.toContain('/bar/e2e/src/app.po.ts');
+    expect(files).not.toContain('/bar/e2e/src/app.e2e-spec.ts');
+    expect(files).not.toContain('/bar/e2e/tsconfig.json');
+    expect(files).not.toContain('/bar/e2e/protractor.conf.js');
   });
 
   it('should should set the prefix in angular.json and in app.component.ts', async () => {
