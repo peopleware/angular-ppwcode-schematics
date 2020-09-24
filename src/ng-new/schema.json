@@ -13,17 +13,9 @@
         "index": 0
       },
       "x-prompt": "What name would you like to use for the new workspace and initial project?"
-    },
-    "prefix": {
-      "type": "string",
-      "format": "html-selector",
-      "description": "The prefix to apply to generated selectors for the initial project.",
-      "minLength": 1,
-      "x-prompt": "What prefix would you like to use for the generated selectors in the initial project?"
     }
   },
   "required": [
-    "name",
-    "prefix"
+    "name"
   ]
 }
