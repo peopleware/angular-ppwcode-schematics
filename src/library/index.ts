@@ -13,6 +13,7 @@ import { MergeStrategy } from '@angular-devkit/schematics/src/tree/interface';
 import { join, normalize, strings } from '@angular-devkit/core';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { relativePathToWorkspaceRoot } from '@schematics/angular/utility/paths';
+import { cloneDeep } from 'lodash';
 
 export interface LibraryOptions {
     projectRoot?: string,
@@ -22,6 +23,7 @@ export interface LibraryOptions {
 
 export default function (options: LibraryOptions): Rule {
     return async (host: Tree) => {
+        const originalOptions = cloneDeep(options); // Use the exact same options when using the external schematic, and do what we want with the current one
         // If scoped project (i.e. "@foo/bar"), convert projectDir to "foo/bar".
         let scopeName = null;
         if (/^@.*\/.*/.test(options.name)) {
@@ -37,7 +39,7 @@ export default function (options: LibraryOptions): Rule {
         const folderName = `${scopeFolder}${strings.dasherize(options.name)}`;
         const projectRoot = join(normalize(newProjectRoot), folderName);
         return chain([
-            externalSchematic('@schematics/angular', 'library', options),
+            externalSchematic('@schematics/angular', 'library', originalOptions),
             mergeWith(
                 apply(url('./files'), [
                     applyTemplates({
