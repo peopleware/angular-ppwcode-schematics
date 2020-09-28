@@ -13,6 +13,7 @@ import { MergeStrategy } from '@angular-devkit/schematics/src/tree/interface';
 import { join, normalize, strings } from '@angular-devkit/core';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { relativePathToWorkspaceRoot } from '@schematics/angular/utility/paths';
+import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { cloneDeep } from 'lodash';
 
 export interface LibraryOptions {
@@ -49,6 +50,30 @@ export default function (options: LibraryOptions): Rule {
                     }),
                     move(projectRoot),
                 ]), MergeStrategy.AllowCreationConflict),
+            addDependenciesToPackageJson()
         ]);
     };
+
+    function addDependenciesToPackageJson() {
+        return (host: Tree) => {
+            [
+                {
+                    type: NodeDependencyType.Dev,
+                    name: 'karma-spec-reporter',
+                    version: '0.0.32',
+                },
+                {
+                    type: NodeDependencyType.Dev,
+                    name: 'angular-tslint-rules',
+                    version: '1.20.4',
+                },
+                {
+                    type: NodeDependencyType.Dev,
+                    name: 'tslint-config-prettier',
+                    version: '1.18.0',
+                },
+            ].forEach(dependency => addPackageJsonDependency(host, dependency));
+            return host;
+        };
+    }
 }
