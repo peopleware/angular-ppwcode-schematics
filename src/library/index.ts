@@ -6,14 +6,16 @@ import {
     mergeWith,
     move,
     Rule,
+    SchematicsException,
     Tree,
     url
 } from '@angular-devkit/schematics';
 import { MergeStrategy } from '@angular-devkit/schematics/src/tree/interface';
 import { join, normalize, strings } from '@angular-devkit/core';
-import { getWorkspace } from '@schematics/angular/utility/workspace';
+import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
 import { relativePathToWorkspaceRoot } from '@schematics/angular/utility/paths';
 import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
+import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { cloneDeep } from 'lodash';
 
 export interface LibraryOptions {
@@ -25,6 +27,7 @@ export interface LibraryOptions {
 export default function (options: LibraryOptions): Rule {
     return async (host: Tree) => {
         const originalOptions = cloneDeep(options); // Use the exact same options when using the external schematic, and do what we want with the current one
+        const fullName = originalOptions.name;
         // If scoped project (i.e. "@foo/bar"), convert projectDir to "foo/bar".
         let scopeName = null;
         if (/^@.*\/.*/.test(options.name)) {
@@ -50,7 +53,9 @@ export default function (options: LibraryOptions): Rule {
                     }),
                     move(projectRoot),
                 ]), MergeStrategy.AllowCreationConflict),
-            addDependenciesToPackageJson()
+            addDependenciesToPackageJson(),
+            modifyWorkspace(fullName),
+            removeTsconfigProduction(projectRoot),
         ]);
     };
 
@@ -75,5 +80,34 @@ export default function (options: LibraryOptions): Rule {
             ].forEach(dependency => addPackageJsonDependency(host, dependency));
             return host;
         };
+    }
+
+    function modifyWorkspace(projectName: string): Rule {
+        return updateWorkspace(workspace => {
+            const project = workspace.projects.get(projectName);
+            if (!project) {
+                throw new SchematicsException(`Invalid project name (${projectName})`);
+            }
+            removeConfigurationsFromBuildConfigurations(project);
+        });
+    }
+
+    function removeConfigurationsFromBuildConfigurations(project: ProjectDefinition): void {
+        const targets = project.targets;
+        const buildTarget = targets.get('build');
+        if (buildTarget === undefined) {
+            throw new SchematicsException("Architect target missing (build)");
+        }
+        if (buildTarget.configurations === undefined) {
+            throw new SchematicsException("Expected build options to be defined");
+        }
+        delete buildTarget["configurations"];
+    }
+
+    function removeTsconfigProduction(libFolder: string) {
+        return (host: Tree) => {
+            host.delete(libFolder + '/tsconfig.lib.prod.json');
+            return host;
+        }
     }
 }
