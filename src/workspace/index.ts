@@ -94,8 +94,8 @@ function updateScriptsToPackageJson(): Rule {
     json.scripts = {
       ...json.scripts,
       "build": "npm run lint:prettier && npm run lint:lint && npm run test && ng build",
-      "lint:prettier": "cross-env prettier --check '**/*.ts' '**/*.md' '**/*.js' '**/*.html' '**/*.scss'",
-      "format:prettier": "cross-env prettier --write '**/*.ts' '**/*.md' '**/*.js' '**/*.html' '**/*.scss'",
+      "lint:prettier": "cross-env prettier --check \"**/*.{ts,js,md,html,scss}\"",
+      "format:prettier": "cross-env prettier --write \"**/*.{ts,js,md,html,scss}\"",
       "test": "ng test --watch=false",
       "lint:lint": "ng lint",
       "format:lint": "ng lint --fix",
