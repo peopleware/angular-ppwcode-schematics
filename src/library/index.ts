@@ -55,6 +55,7 @@ export default function (options: LibraryOptions): Rule {
                     move(projectRoot),
                 ]), MergeStrategy.AllowCreationConflict),
             addDependenciesToPackageJson(),
+            addDependenciesToLibraryPackageJson(projectRoot),
             modifyWorkspace(fullName),
             updateAngularCompilerOptionsToTsConfig(projectRoot),
             removeTsconfigProduction(projectRoot),
@@ -125,5 +126,24 @@ export default function (options: LibraryOptions): Rule {
             host.delete(libFolder + '/tsconfig.lib.prod.json');
             return host;
         }
+    }
+
+    function addDependenciesToLibraryPackageJson(libFolder: string): Rule {
+        return (host: Tree) => {
+            [
+                {
+                    type: NodeDependencyType.Dev,
+                    name: 'zone.js',
+                    version: '~0.10.2',
+                },
+                {
+                    type: NodeDependencyType.Dev,
+                    name: '@angular/platform-browser-dynamic',
+                    version: '~10.1.1',
+                },
+            ].forEach(dependency => addPackageJsonDependency(host, dependency, `${libFolder}/package.json`));
+
+            return host;
+        };
     }
 }

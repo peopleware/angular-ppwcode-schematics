@@ -74,4 +74,14 @@ describe('Library Schematic', () => {
         expect(tsconfig.angularCompilerOptions.enableIvy).toBeFalse();
     });
 
+    it('should should contain dev dependencies in library package.json', async () => {
+        const options = { ...defaultOptions };
+
+        const tree = await schematicRunner.runSchematicAsync('library', options, workspaceTree)
+            .toPromise();
+        const packageJson = JSON.parse(tree.readContent('/projects/foo/package.json'));
+        expect(packageJson.devDependencies['zone.js']).toBeDefined();
+        expect(packageJson.devDependencies['@angular/platform-browser-dynamic']).toBeDefined();
+    });
+
 });
