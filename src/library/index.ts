@@ -17,6 +17,7 @@ import { relativePathToWorkspaceRoot } from '@schematics/angular/utility/paths';
 import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
 import { cloneDeep } from 'lodash';
+import { parseConfigFileTextToJson } from 'typescript';
 
 export interface LibraryOptions {
     projectRoot?: string,
@@ -55,6 +56,7 @@ export default function (options: LibraryOptions): Rule {
                 ]), MergeStrategy.AllowCreationConflict),
             addDependenciesToPackageJson(),
             modifyWorkspace(fullName),
+            updateAngularCompilerOptionsToTsConfig(projectRoot),
             removeTsconfigProduction(projectRoot),
         ]);
     };
@@ -90,6 +92,20 @@ export default function (options: LibraryOptions): Rule {
             }
             removeConfigurationsFromBuildConfigurations(project);
         });
+    }
+
+    function updateAngularCompilerOptionsToTsConfig(folderName: string): Rule {
+        return (host: Tree): Tree => {
+            const path = `${folderName}/tsconfig.lib.json`;
+            const file = host.read(path);
+            const json = parseConfigFileTextToJson(path, file!.toString())
+            json.config.angularCompilerOptions = {
+                ...json.config.angularCompilerOptions,
+                "enableIvy": false
+            };
+            host.overwrite(path, JSON.stringify(json.config, null, 2));
+            return host;
+        }
     }
 
     function removeConfigurationsFromBuildConfigurations(project: ProjectDefinition): void {
