@@ -1,0 +1,14 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["angular-tslint-rules", "tslint-config-prettier"],
+  "rules": {
+    "template-i18n": false,
+    "component-selector": [true, "element", "<%= prefix %>", "kebab-case"],
+    "no-pipe-impure": false,
+    "no-null-keyword": false,
+    "no-lifecycle-call": false,
+    "no-unbound-method": false,
+    "no-implicit-dependencies": [true, "dev"]
+  },
+  "rulesDirectory": ["codelyzer"]
+}

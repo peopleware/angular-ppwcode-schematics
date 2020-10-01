@@ -19,6 +19,12 @@
       "factory": "./application",
       "schema": "./application/schema.json",
       "description": "Create an Angular application."
+    },
+    "library": {
+      "aliases": ["lib"],
+      "factory": "./library",
+      "schema": "./library/schema.json",
+      "description": "Generate a library project for Angular."
     }
   }
 }
