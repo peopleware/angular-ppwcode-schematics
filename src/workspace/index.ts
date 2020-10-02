@@ -102,7 +102,7 @@ function updateScriptsToPackageJson(): Rule {
     };
     json.husky = {
       "hooks": {
-        "pre-push": "npm run lint:prettier && npm run lint:lint",
+        "pre-push": "if git-branch-is -q master; then npm run lint:prettier && npm run lint:lint; fi",
       }
     };
     host.overwrite(path, JSON.stringify(json, null, 2));
