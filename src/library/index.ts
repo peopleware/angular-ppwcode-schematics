@@ -139,7 +139,7 @@ export default function (options: LibraryOptions): Rule {
                 {
                     type: NodeDependencyType.Dev,
                     name: '@angular/platform-browser-dynamic',
-                    version: '~10.1.1',
+                    version: '~10.1.4',
                 },
             ].forEach(dependency => addPackageJsonDependency(host, dependency, `${libFolder}/package.json`));
 
