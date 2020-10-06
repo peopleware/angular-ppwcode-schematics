@@ -79,6 +79,11 @@ function addDependenciesToPackageJson() {
         name: 'husky',
         version: '4.3.0'
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'git-branch-is',
+        version: '4.0.0'
+      },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
