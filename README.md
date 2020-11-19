@@ -15,7 +15,7 @@ To generate an Angular project with ppw compliant configurations
 If you want to test the development code follow the following steps:
 1. Run `npm run build` in this project
 2. Go to your desired directory by running: `cd ./to/your/desired/directory`
-3. Run `ng new test --collection=<path_to_this_repo>/dist/collection.json`
+3. Run `ng new --collection=<path_to_this_repo>/dist/collection.json`
 
 ### Unit Testing
 
