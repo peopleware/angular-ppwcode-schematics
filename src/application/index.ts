@@ -100,7 +100,6 @@ function addBuildOptions(project: ProjectDefinition) {
     throw new SchematicsException("Expected build options to be defined");
   }
   buildTarget.options['buildOptimizer'] = true;
-  buildTarget.options['extractCss'] = true;
   buildTarget.options['extractLicenses'] = true;
   buildTarget.options['optimization'] = true;
   buildTarget.options['statsJson'] = true;

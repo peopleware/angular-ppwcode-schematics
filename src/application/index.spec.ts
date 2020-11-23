@@ -65,7 +65,6 @@ describe('Application Schematic', () => {
     const prj = config.projects.foo;
     const buildOpt = prj.architect.build.options;
     expect(buildOpt.buildOptimizer).toBeTrue();
-    expect(buildOpt.extractCss).toBeTrue();
     expect(buildOpt.extractLicenses).toBeTrue();
     expect(buildOpt.optimization).toBeTrue();
     expect(buildOpt.statsJson).toBeTrue();
