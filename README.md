@@ -24,3 +24,6 @@ If you want to test the development code follow the following steps:
 ### Publishing
 
 Publishing is performed by the GitHub workflow.
+
+Do this by browsing to https://github.com/peopleware/angular-ppwcode-schematics/releases
+and click "draft a new release".
