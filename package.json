@@ -1,6 +1,6 @@
 {
   "name": "@ppwcode/angular-schematics",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "PPWCode Angular Schematics",
   "scripts": {
     "build": "npm run build:compile && npm run build:copy",
