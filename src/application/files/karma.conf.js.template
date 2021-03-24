@@ -29,8 +29,7 @@ module.exports = function (config) {
         { type: 'html' },
         { type: 'text-summary' }
       ],
-      thresholds: {
-        emitWarning: false,
+      check: {
         global: {
           statements: 100,
           lines: 100,
