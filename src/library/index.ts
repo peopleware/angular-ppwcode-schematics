@@ -134,12 +134,12 @@ export default function (options: LibraryOptions): Rule {
                 {
                     type: NodeDependencyType.Dev,
                     name: 'zone.js',
-                    version: '~0.10.2',
+                    version: '~0.11.3',
                 },
                 {
                     type: NodeDependencyType.Dev,
                     name: '@angular/platform-browser-dynamic',
-                    version: '~10.1.4',
+                    version: '~11.2.6',
                 },
             ].forEach(dependency => addPackageJsonDependency(host, dependency, `${libFolder}/package.json`));
 
