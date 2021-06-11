@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsAngularNgNew",
+  "$id": "SchematicsAngularNgNew",
   "title": "Angular Ng New Options Schema",
   "type": "object",
   "properties": {
