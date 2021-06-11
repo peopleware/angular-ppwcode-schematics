@@ -74,7 +74,7 @@ function modifyWorkspace(options: ApplicationOptions) {
     moveBudgets(project);
     configureBuildConfigurations(project);
     addTestOptions(project);
-    updateServeOptions(project);
+    updateServeOptions(project, options.name);
   });
 }
 
@@ -106,16 +106,14 @@ function addBuildOptions(project: ProjectDefinition) {
   buildTarget.options['outputPath'] = 'dist';
 }
 
-function updateServeOptions(project: ProjectDefinition) {
+function updateServeOptions(project: ProjectDefinition, projectName: string) {
   const targets = project.targets;
   const serveTarget = targets.get('serve');
   if (serveTarget === undefined) {
     throw new SchematicsException("Build target missing (serve)");
   }
-  if (serveTarget.options === undefined) {
-    throw new SchematicsException("Expected build options to be defined");
-  }
-  serveTarget.options['browserTarget'] = serveTarget.options['browserTarget'] + ':serve';
+  serveTarget.options = {};
+  serveTarget.options['browserTarget'] = projectName + ':build:serve';
   delete serveTarget["configurations"];
 }
 
