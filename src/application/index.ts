@@ -190,6 +190,11 @@ function addDependenciesToPackageJson() {
         name: 'tslint-config-prettier',
         version: '1.18.0',
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'tslint',
+        version: '6.1.3',
+      },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
