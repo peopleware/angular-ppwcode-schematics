@@ -116,6 +116,7 @@ function updateServeOptions(project: ProjectDefinition, projectName: string) {
   serveTarget.options = {};
   serveTarget.options['browserTarget'] = projectName + ':build:serve';
   delete serveTarget["configurations"];
+  delete serveTarget["defaultConfiguration"];
 }
 
 function addTestOptions(project: ProjectDefinition) {
@@ -171,6 +172,7 @@ function configureBuildConfigurations(project: ProjectDefinition) {
       namedChunks: true
     }
   };
+  delete buildTarget['defaultConfiguration'];
 }
 
 function configureTsLint(project: ProjectDefinition) {
