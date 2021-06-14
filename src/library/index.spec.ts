@@ -40,6 +40,7 @@ describe('Library Schematic', () => {
 
         const tree = await schematicRunner.runSchematicAsync('library', options, workspaceTree)
             .toPromise();
+
         const files = tree.files;
         expect(files).toContain('/projects/foo/src/lib/foo.module.ts');
     });
