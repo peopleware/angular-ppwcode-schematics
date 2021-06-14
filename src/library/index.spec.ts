@@ -15,7 +15,6 @@ describe('Library Schematic', () => {
 
     const defaultOptions: LibraryOptions = {
         name: 'foo',
-        projectRoot: undefined,
         prefix: 'application',
     };
 
