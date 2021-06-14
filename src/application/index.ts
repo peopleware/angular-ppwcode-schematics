@@ -99,10 +99,10 @@ function addBuildOptions(project: ProjectDefinition) {
   if (buildTarget.options === undefined) {
     throw new SchematicsException("Expected build options to be defined");
   }
-  buildTarget.options['buildOptimizer'] = true;
-  buildTarget.options['extractLicenses'] = true;
-  buildTarget.options['optimization'] = true;
   buildTarget.options['statsJson'] = true;
+  buildTarget.options['sourceMap'] = true;
+  buildTarget.options['vendorChunk'] = true;
+  buildTarget.options['namedChunks'] = true;
   buildTarget.options['outputPath'] = 'dist';
 }
 
@@ -164,7 +164,10 @@ function configureBuildConfigurations(project: ProjectDefinition) {
       buildOptimizer: false,
       optimization: false,
       extractLicenses: false,
-      statsJson: false
+      statsJson: false,
+      sourceMap: true,
+      vendorChunk: true,
+      namedChunks: true
     }
   };
 }
