@@ -135,12 +135,12 @@ export default function (options: LibraryOptions): Rule {
                 {
                     type: NodeDependencyType.Dev,
                     name: 'zone.js',
-                    version: '~0.11.3',
+                    version: '~0.11.4',
                 },
                 {
                     type: NodeDependencyType.Dev,
                     name: '@angular/platform-browser-dynamic',
-                    version: '~11.2.6',
+                    version: '~12.0.4',
                 },
                 {
                     type: NodeDependencyType.Dev,
