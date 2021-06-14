@@ -163,7 +163,6 @@ function configureBuildConfigurations(project: ProjectDefinition) {
 
   buildTarget.configurations  = {
     serve: {
-      aot: false,
       buildOptimizer: false,
       optimization: false,
       extractLicenses: false,
