@@ -93,7 +93,7 @@ describe('Application Schematic', () => {
     expect(configurations.production).not.toBeDefined();
     expect(Object.getOwnPropertyNames(configurations).length).toEqual(1);
     expect(configurations.serve).toBeDefined();
-    expect(configurations.serve.aot).toBeFalse();
+    expect(configurations.serve.aot).toBeUndefined();
     expect(configurations.serve.buildOptimizer).toBeFalse();
     expect(configurations.serve.optimization).toBeFalse();
     expect(configurations.serve.extractLicenses).toBeFalse();
