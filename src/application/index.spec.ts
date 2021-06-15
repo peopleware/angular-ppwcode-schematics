@@ -89,16 +89,16 @@ describe('Application Schematic', () => {
     const configurations = prj.architect.build.configurations;
     expect(configurations.production).not.toBeDefined();
     expect(Object.getOwnPropertyNames(configurations).length).toEqual(1);
-    expect(configurations.serve).toBeDefined();
-    expect(configurations.serve.aot).toBeUndefined();
-    expect(configurations.serve.buildOptimizer).toBeFalse();
-    expect(configurations.serve.optimization).toBeFalse();
-    expect(configurations.serve.extractLicenses).toBeFalse();
-    expect(configurations.serve.statsJson).toBeFalse();
-    expect(configurations.serve.sourceMap).toBeTrue();
-    expect(configurations.serve.vendorChunk).toBeTrue();
-    expect(configurations.serve.namedChunks).toBeTrue();
-    expect(configurations.serve.fileReplacements).toBeUndefined();
+    expect(configurations.development).toBeDefined();
+    expect(configurations.development.aot).toBeUndefined();
+    expect(configurations.development.buildOptimizer).toBeFalse();
+    expect(configurations.development.optimization).toBeFalse();
+    expect(configurations.development.extractLicenses).toBeFalse();
+    expect(configurations.development.statsJson).toBeFalse();
+    expect(configurations.development.sourceMap).toBeUndefined();
+    expect(configurations.development.vendorChunk).toBeUndefined();
+    expect(configurations.development.namedChunks).toBeUndefined();
+    expect(configurations.development.fileReplacements).toBeUndefined();
   });
 
   it('should configure test options', async () => {

@@ -181,19 +181,14 @@ function configureBuildConfigurations(project: ProjectDefinition) {
   if (buildTarget.configurations === undefined) {
     throw new SchematicsException("Expected build configurations to be defined");
   }
-
-  buildTarget.configurations  = {
-    serve: {
-      buildOptimizer: false,
-      optimization: false,
-      extractLicenses: false,
-      statsJson: false,
-      sourceMap: true,
-      vendorChunk: true,
-      namedChunks: true
-    }
-  };
-  delete buildTarget['defaultConfiguration'];
+  if (buildTarget.configurations.development === undefined) {
+    throw new SchematicsException("Expected build configurations development to be defined");
+  }
+  buildTarget.configurations.development['statsJson'] = false;
+  delete buildTarget.configurations.development.vendorChunk; // Already defaulted correctly in build options
+  delete buildTarget.configurations.development.sourceMap; // Already defaulted correctly in build options
+  delete buildTarget.configurations.development.namedChunks; // Already defaulted correctly in build options
+  delete buildTarget.defaultConfiguration; // There is no production configuration (the default is no configuration, only overrideable by the development configuration)
 }
 
 function configureTsLint(project: ProjectDefinition) {
