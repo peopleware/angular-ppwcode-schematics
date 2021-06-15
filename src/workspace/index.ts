@@ -62,7 +62,7 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: '@ppwcode/angular-schematics',
-        version: '2.1.1',
+        version: '3.0.0',
       },
       {
         type: NodeDependencyType.Dev,
