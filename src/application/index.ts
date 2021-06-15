@@ -167,6 +167,7 @@ function moveBudgets(project: ProjectDefinition) {
   }
   const budgets = buildTarget.configurations.production.budgets;
   buildTarget.options['budgets'] = cloneDeep(budgets);
+  delete buildTarget.configurations.production.budgets;
 }
 
 function configureBuildConfigurations(project: ProjectDefinition) {
