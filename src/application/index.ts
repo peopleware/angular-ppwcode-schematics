@@ -11,7 +11,7 @@ import {
 } from '@angular-devkit/schematics';
 import {getWorkspace, updateWorkspace} from "@schematics/angular/utility/workspace";
 import {join, JsonObject, normalize} from "@angular-devkit/core";
-import {ProjectDefinition} from "@angular-devkit/core/src/workspace";
+import { ProjectDefinition, TargetDefinition } from "@angular-devkit/core/src/workspace";
 import {cloneDeep} from "lodash";
 import {relativePathToWorkspaceRoot} from "@schematics/angular/utility/paths";
 import {MergeStrategy} from "@angular-devkit/schematics/src/tree/interface";
@@ -73,8 +73,9 @@ function modifyWorkspace(options: ApplicationOptions) {
     addBuildOptions(project);
     moveBudgets(project);
     configureBuildConfigurations(project);
+    configureTsLint(project);
     addTestOptions(project);
-    updateServeOptions(project);
+    updateServeOptions(project, options.name);
   });
 }
 
@@ -99,24 +100,23 @@ function addBuildOptions(project: ProjectDefinition) {
   if (buildTarget.options === undefined) {
     throw new SchematicsException("Expected build options to be defined");
   }
-  buildTarget.options['buildOptimizer'] = true;
-  buildTarget.options['extractLicenses'] = true;
-  buildTarget.options['optimization'] = true;
   buildTarget.options['statsJson'] = true;
+  buildTarget.options['sourceMap'] = true;
+  buildTarget.options['vendorChunk'] = true;
+  buildTarget.options['namedChunks'] = true;
   buildTarget.options['outputPath'] = 'dist';
 }
 
-function updateServeOptions(project: ProjectDefinition) {
+function updateServeOptions(project: ProjectDefinition, projectName: string) {
   const targets = project.targets;
   const serveTarget = targets.get('serve');
   if (serveTarget === undefined) {
     throw new SchematicsException("Build target missing (serve)");
   }
-  if (serveTarget.options === undefined) {
-    throw new SchematicsException("Expected build options to be defined");
-  }
-  serveTarget.options['browserTarget'] = serveTarget.options['browserTarget'] + ':serve';
+  serveTarget.options = {};
+  serveTarget.options['browserTarget'] = projectName + ':build:serve';
   delete serveTarget["configurations"];
+  delete serveTarget["defaultConfiguration"];
 }
 
 function addTestOptions(project: ProjectDefinition) {
@@ -166,9 +166,29 @@ function configureBuildConfigurations(project: ProjectDefinition) {
       buildOptimizer: false,
       optimization: false,
       extractLicenses: false,
-      statsJson: false
+      statsJson: false,
+      sourceMap: true,
+      vendorChunk: true,
+      namedChunks: true
     }
   };
+  delete buildTarget['defaultConfiguration'];
+}
+
+function configureTsLint(project: ProjectDefinition) {
+  const tsLintTargetDefinition: TargetDefinition = {
+    builder: '@angular-devkit/build-angular:tslint',
+    options: {
+      tsConfig: [
+        'tsconfig.app.json',
+        'tsconfig.spec.json'
+      ],
+      exclude: [
+        '**/node_modules/**'
+      ]
+    }
+  }
+  project.targets.set('lint', tsLintTargetDefinition);
 }
 
 function addDependenciesToPackageJson() {
@@ -188,6 +208,16 @@ function addDependenciesToPackageJson() {
         type: NodeDependencyType.Dev,
         name: 'tslint-config-prettier',
         version: '1.18.0',
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'tslint',
+        version: '6.1.3',
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'codelyzer',
+        version: '6.0.2',
       },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 

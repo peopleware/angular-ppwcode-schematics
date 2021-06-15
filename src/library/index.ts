@@ -15,7 +15,7 @@ import { join, normalize, strings } from '@angular-devkit/core';
 import { getWorkspace, updateWorkspace } from '@schematics/angular/utility/workspace';
 import { relativePathToWorkspaceRoot } from '@schematics/angular/utility/paths';
 import { addPackageJsonDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
-import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
+import { ProjectDefinition, TargetDefinition } from '@angular-devkit/core/src/workspace';
 import { cloneDeep } from 'lodash';
 import { parseConfigFileTextToJson } from 'typescript';
 
@@ -92,6 +92,7 @@ export default function (options: LibraryOptions): Rule {
                 throw new SchematicsException(`Invalid project name (${projectName})`);
             }
             removeConfigurationsFromBuildConfigurations(project);
+            configureTsLint(project);
         });
     }
 
@@ -134,16 +135,42 @@ export default function (options: LibraryOptions): Rule {
                 {
                     type: NodeDependencyType.Dev,
                     name: 'zone.js',
-                    version: '~0.11.3',
+                    version: '~0.11.4',
                 },
                 {
                     type: NodeDependencyType.Dev,
                     name: '@angular/platform-browser-dynamic',
-                    version: '~11.2.6',
+                    version: '~12.0.4',
+                },
+                {
+                    type: NodeDependencyType.Dev,
+                    name: 'tslint',
+                    version: '6.1.3',
+                },
+                {
+                    type: NodeDependencyType.Dev,
+                    name: 'codelyzer',
+                    version: '6.0.2',
                 },
             ].forEach(dependency => addPackageJsonDependency(host, dependency, `${libFolder}/package.json`));
 
             return host;
         };
+    }
+
+    function configureTsLint(project: ProjectDefinition) {
+        const tsLintTargetDefinition: TargetDefinition = {
+            builder: '@angular-devkit/build-angular:tslint',
+            options: {
+                tsConfig: [
+                    'tsconfig.app.json',
+                    'tsconfig.spec.json'
+                ],
+                exclude: [
+                    '**/node_modules/**'
+                ]
+            }
+        }
+        project.targets.set('lint', tsLintTargetDefinition);
     }
 }

@@ -64,9 +64,6 @@ describe('Application Schematic', () => {
     const config = JSON.parse(tree.readContent('/angular.json'));
     const prj = config.projects.foo;
     const buildOpt = prj.architect.build.options;
-    expect(buildOpt.buildOptimizer).toBeTrue();
-    expect(buildOpt.extractLicenses).toBeTrue();
-    expect(buildOpt.optimization).toBeTrue();
     expect(buildOpt.statsJson).toBeTrue();
     expect(buildOpt.outputPath).toEqual('dist');
   });
@@ -98,6 +95,9 @@ describe('Application Schematic', () => {
     expect(configurations.serve.optimization).toBeFalse();
     expect(configurations.serve.extractLicenses).toBeFalse();
     expect(configurations.serve.statsJson).toBeFalse();
+    expect(configurations.serve.sourceMap).toBeTrue();
+    expect(configurations.serve.vendorChunk).toBeTrue();
+    expect(configurations.serve.namedChunks).toBeTrue();
     expect(configurations.serve.fileReplacements).toBeUndefined();
   });
 
