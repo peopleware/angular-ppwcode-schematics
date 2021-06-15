@@ -113,18 +113,17 @@ describe('Application Schematic', () => {
     expect(testOptions.codeCoverage).toBeTrue();
   });
 
-  it('should configure serve options', async () => {
+  it('should remove the serve production configuration', async () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematicAsync('application', options, workspaceTree)
       .toPromise();
     const config = JSON.parse(tree.readContent('/angular.json'));
     const prj = config.projects.foo;
-    const serveOptions = prj.architect.serve.options;
-    expect(serveOptions).toBeDefined();
-    expect(serveOptions.browserTarget).toEqual("foo:build:serve");
     const serveConfigurations = prj.architect.serve.configurations;
-    expect(serveConfigurations).toBeUndefined();
+    expect(serveConfigurations).toBeDefined();
+    expect(serveConfigurations.production).toBeUndefined();
+    expect(serveConfigurations.development).toBeDefined();
   });
 
   it('should should set the prefix in angular.json and in app.component.ts', async () => {

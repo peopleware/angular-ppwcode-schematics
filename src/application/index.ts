@@ -75,7 +75,7 @@ function modifyWorkspace(options: ApplicationOptions) {
     configureBuildConfigurations(project);
     configureTsLint(project);
     addTestOptions(project);
-    updateServeOptions(project, options.name);
+    updateServeOptions(project);
   });
 }
 
@@ -107,16 +107,16 @@ function addBuildOptions(project: ProjectDefinition) {
   buildTarget.options['outputPath'] = 'dist';
 }
 
-function updateServeOptions(project: ProjectDefinition, projectName: string) {
+function updateServeOptions(project: ProjectDefinition) {
   const targets = project.targets;
   const serveTarget = targets.get('serve');
   if (serveTarget === undefined) {
     throw new SchematicsException("Build target missing (serve)");
   }
-  serveTarget.options = {};
-  serveTarget.options['browserTarget'] = projectName + ':build:serve';
-  delete serveTarget["configurations"];
-  delete serveTarget["defaultConfiguration"];
+  if (serveTarget.configurations === undefined) {
+    throw new SchematicsException("Build target configurations missing (serve)");
+  }
+  delete serveTarget.configurations.production;
 }
 
 function addTestOptions(project: ProjectDefinition) {
