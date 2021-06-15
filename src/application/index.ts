@@ -75,7 +75,6 @@ function modifyWorkspace(options: ApplicationOptions) {
     configureBuildConfigurations(project);
     configureTsLint(project);
     addTestOptions(project);
-    updateServeOptions(project);
     removeProductionConfiguration(project);
   });
 }
@@ -86,6 +85,7 @@ function modifyWorkspace(options: ApplicationOptions) {
  */
 function removeProductionConfiguration(project: ProjectDefinition) {
   const buildTarget = project.targets.get('build');
+  const serveTarget = project.targets.get('serve');
   if (buildTarget === undefined) {
     throw new SchematicsException("Build target missing (build)");
   }
@@ -95,7 +95,14 @@ function removeProductionConfiguration(project: ProjectDefinition) {
   if (buildTarget.configurations.production === undefined) {
     throw new SchematicsException("Expected build options to be defined");
   }
+  if (serveTarget === undefined) {
+    throw new SchematicsException("Build target missing (serve)");
+  }
+  if (serveTarget.configurations === undefined) {
+    throw new SchematicsException("Build target configurations missing (serve)");
+  }
 
+  delete serveTarget.configurations.production;
   delete buildTarget.configurations.production;
 }
 
@@ -125,18 +132,6 @@ function addBuildOptions(project: ProjectDefinition) {
   buildTarget.options['vendorChunk'] = true;
   buildTarget.options['namedChunks'] = true;
   buildTarget.options['outputPath'] = 'dist';
-}
-
-function updateServeOptions(project: ProjectDefinition) {
-  const targets = project.targets;
-  const serveTarget = targets.get('serve');
-  if (serveTarget === undefined) {
-    throw new SchematicsException("Build target missing (serve)");
-  }
-  if (serveTarget.configurations === undefined) {
-    throw new SchematicsException("Build target configurations missing (serve)");
-  }
-  delete serveTarget.configurations.production;
 }
 
 function addTestOptions(project: ProjectDefinition) {
