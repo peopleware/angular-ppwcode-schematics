@@ -75,8 +75,35 @@ function modifyWorkspace(options: ApplicationOptions) {
     configureBuildConfigurations(project);
     configureTsLint(project);
     addTestOptions(project);
-    updateServeOptions(project, options.name);
+    removeProductionConfiguration(project);
   });
+}
+
+/**
+ * The default configuration is our production configuration.
+ * The only configuration that needs to override this is the development configuration used in the serve option.
+ */
+function removeProductionConfiguration(project: ProjectDefinition) {
+  const buildTarget = project.targets.get('build');
+  const serveTarget = project.targets.get('serve');
+  if (buildTarget === undefined) {
+    throw new SchematicsException("Build target missing (build)");
+  }
+  if (buildTarget.configurations === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  if (buildTarget.configurations.production === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  if (serveTarget === undefined) {
+    throw new SchematicsException("Build target missing (serve)");
+  }
+  if (serveTarget.configurations === undefined) {
+    throw new SchematicsException("Build target configurations missing (serve)");
+  }
+
+  delete serveTarget.configurations.production;
+  delete buildTarget.configurations.production;
 }
 
 function removeDuplicateStyle(project: ProjectDefinition) {
@@ -107,18 +134,6 @@ function addBuildOptions(project: ProjectDefinition) {
   buildTarget.options['outputPath'] = 'dist';
 }
 
-function updateServeOptions(project: ProjectDefinition, projectName: string) {
-  const targets = project.targets;
-  const serveTarget = targets.get('serve');
-  if (serveTarget === undefined) {
-    throw new SchematicsException("Build target missing (serve)");
-  }
-  serveTarget.options = {};
-  serveTarget.options['browserTarget'] = projectName + ':build:serve';
-  delete serveTarget["configurations"];
-  delete serveTarget["defaultConfiguration"];
-}
-
 function addTestOptions(project: ProjectDefinition) {
   const testTarget = project.targets.get('test');
   if (testTarget === undefined) {
@@ -147,6 +162,7 @@ function moveBudgets(project: ProjectDefinition) {
   }
   const budgets = buildTarget.configurations.production.budgets;
   buildTarget.options['budgets'] = cloneDeep(budgets);
+  delete buildTarget.configurations.production.budgets;
 }
 
 function configureBuildConfigurations(project: ProjectDefinition) {
@@ -160,19 +176,14 @@ function configureBuildConfigurations(project: ProjectDefinition) {
   if (buildTarget.configurations === undefined) {
     throw new SchematicsException("Expected build configurations to be defined");
   }
-
-  buildTarget.configurations  = {
-    serve: {
-      buildOptimizer: false,
-      optimization: false,
-      extractLicenses: false,
-      statsJson: false,
-      sourceMap: true,
-      vendorChunk: true,
-      namedChunks: true
-    }
-  };
-  delete buildTarget['defaultConfiguration'];
+  if (buildTarget.configurations.development === undefined) {
+    throw new SchematicsException("Expected build configurations development to be defined");
+  }
+  buildTarget.configurations.development['statsJson'] = false;
+  delete buildTarget.configurations.development.vendorChunk; // Already defaulted correctly in build options
+  delete buildTarget.configurations.development.sourceMap; // Already defaulted correctly in build options
+  delete buildTarget.configurations.development.namedChunks; // Already defaulted correctly in build options
+  delete buildTarget.defaultConfiguration; // There is no production configuration (the default is no configuration, only overrideable by the development configuration)
 }
 
 function configureTsLint(project: ProjectDefinition) {

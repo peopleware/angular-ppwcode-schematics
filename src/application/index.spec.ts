@@ -89,16 +89,16 @@ describe('Application Schematic', () => {
     const configurations = prj.architect.build.configurations;
     expect(configurations.production).not.toBeDefined();
     expect(Object.getOwnPropertyNames(configurations).length).toEqual(1);
-    expect(configurations.serve).toBeDefined();
-    expect(configurations.serve.aot).toBeUndefined();
-    expect(configurations.serve.buildOptimizer).toBeFalse();
-    expect(configurations.serve.optimization).toBeFalse();
-    expect(configurations.serve.extractLicenses).toBeFalse();
-    expect(configurations.serve.statsJson).toBeFalse();
-    expect(configurations.serve.sourceMap).toBeTrue();
-    expect(configurations.serve.vendorChunk).toBeTrue();
-    expect(configurations.serve.namedChunks).toBeTrue();
-    expect(configurations.serve.fileReplacements).toBeUndefined();
+    expect(configurations.development).toBeDefined();
+    expect(configurations.development.aot).toBeUndefined();
+    expect(configurations.development.buildOptimizer).toBeFalse();
+    expect(configurations.development.optimization).toBeFalse();
+    expect(configurations.development.extractLicenses).toBeFalse();
+    expect(configurations.development.statsJson).toBeFalse();
+    expect(configurations.development.sourceMap).toBeUndefined();
+    expect(configurations.development.vendorChunk).toBeUndefined();
+    expect(configurations.development.namedChunks).toBeUndefined();
+    expect(configurations.development.fileReplacements).toBeUndefined();
   });
 
   it('should configure test options', async () => {
@@ -113,18 +113,17 @@ describe('Application Schematic', () => {
     expect(testOptions.codeCoverage).toBeTrue();
   });
 
-  it('should configure serve options', async () => {
+  it('should remove the serve production configuration', async () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematicAsync('application', options, workspaceTree)
       .toPromise();
     const config = JSON.parse(tree.readContent('/angular.json'));
     const prj = config.projects.foo;
-    const serveOptions = prj.architect.serve.options;
-    expect(serveOptions).toBeDefined();
-    expect(serveOptions.browserTarget).toEqual("foo:build:serve");
     const serveConfigurations = prj.architect.serve.configurations;
-    expect(serveConfigurations).toBeUndefined();
+    expect(serveConfigurations).toBeDefined();
+    expect(serveConfigurations.production).toBeUndefined();
+    expect(serveConfigurations.development).toBeDefined();
   });
 
   it('should should set the prefix in angular.json and in app.component.ts', async () => {
