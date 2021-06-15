@@ -76,7 +76,27 @@ function modifyWorkspace(options: ApplicationOptions) {
     configureTsLint(project);
     addTestOptions(project);
     updateServeOptions(project);
+    removeProductionConfiguration(project);
   });
+}
+
+/**
+ * The default configuration is our production configuration.
+ * The only configuration that needs to override this is the development configuration used in the serve option.
+ */
+function removeProductionConfiguration(project: ProjectDefinition) {
+  const buildTarget = project.targets.get('build');
+  if (buildTarget === undefined) {
+    throw new SchematicsException("Build target missing (build)");
+  }
+  if (buildTarget.configurations === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+  if (buildTarget.configurations.production === undefined) {
+    throw new SchematicsException("Expected build options to be defined");
+  }
+
+  delete buildTarget.configurations.production;
 }
 
 function removeDuplicateStyle(project: ProjectDefinition) {
