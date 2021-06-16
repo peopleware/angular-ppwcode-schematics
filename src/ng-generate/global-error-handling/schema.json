@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "GenerateGlobalErrorHandling",
+    "title": "Generate Global Error Handling",
+    "description": "Generates a class that extends the Angular ErrorHandler class and a module. Updates the project module to import the generated module so that error handling is set up.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The name of error displayer class.",
+            "type": "string",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "What name would you like to use for the error displayer class?"
+        },
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+                "$source": "projectName"
+            }
+        }
+    }
+}

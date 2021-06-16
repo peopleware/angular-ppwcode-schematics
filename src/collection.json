@@ -25,6 +25,12 @@
       "factory": "./library",
       "schema": "./library/schema.json",
       "description": "Generate a library project for Angular."
+    },
+    "global-error-handling": {
+      "aliases": ["geh"],
+      "factory": "./ng-generate/global-error-handling",
+      "schema": "./ng-generate/global-error-handling/schema.json",
+      "description": "Adds global error handling to the project"
     }
   }
 }
