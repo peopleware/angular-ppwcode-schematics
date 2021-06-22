@@ -84,6 +84,16 @@ function addDependenciesToPackageJson() {
         name: 'git-branch-is',
         version: '4.0.0'
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'stylelint',
+        version: '13.13.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'stylelint-config-standard',
+        version: '22.0.0'
+      }
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
@@ -104,6 +114,7 @@ function updateScriptsToPackageJson(): Rule {
       "test": "ng test --watch=false",
       "lint:lint": "ng lint",
       "format:lint": "ng lint --fix",
+      "lint:styles": "stylelint \"src/app/**/*.scss\"",
     };
     json.husky = {
       "hooks": {
