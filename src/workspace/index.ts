@@ -108,7 +108,7 @@ function updateScriptsToPackageJson(): Rule {
     delete json.scripts.lint;
     json.scripts = {
       ...json.scripts,
-      "build": "npm run lint:prettier && npm run lint:lint && npm run test && ng build",
+      "build": "npm run lint:prettier && npm run lint:lint && npm run lint:styles && npm run test && ng build",
       "lint:prettier": "cross-env prettier --check \"**/*.{ts,js,md,html,scss}\"",
       "format:prettier": "cross-env prettier --write \"**/*.{ts,js,md,html,scss}\"",
       "test": "ng test --watch=false",
@@ -118,7 +118,7 @@ function updateScriptsToPackageJson(): Rule {
     };
     json.husky = {
       "hooks": {
-        "pre-push": "if git-branch-is -q master; then npm run lint:prettier && npm run lint:lint; fi",
+        "pre-push": "if git-branch-is -q master; then npm run lint:prettier && npm run lint:lint && npm run lint:styles; fi",
       }
     };
     host.overwrite(path, JSON.stringify(json, null, 2));
