@@ -84,6 +84,16 @@ function addDependenciesToPackageJson() {
         name: 'git-branch-is',
         version: '4.0.0'
       },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'stylelint',
+        version: '13.13.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: 'stylelint-config-standard',
+        version: '22.0.0'
+      }
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
     return host;
@@ -98,16 +108,17 @@ function updateScriptsToPackageJson(): Rule {
     delete json.scripts.lint;
     json.scripts = {
       ...json.scripts,
-      "build": "npm run lint:prettier && npm run lint:lint && npm run test && ng build",
+      "build": "npm run lint:prettier && npm run lint:lint && npm run lint:styles && npm run test && ng build",
       "lint:prettier": "cross-env prettier --check \"**/*.{ts,js,md,html,scss}\"",
       "format:prettier": "cross-env prettier --write \"**/*.{ts,js,md,html,scss}\"",
       "test": "ng test --watch=false",
       "lint:lint": "ng lint",
       "format:lint": "ng lint --fix",
+      "lint:styles": "stylelint \"src/app/**/*.scss\"",
     };
     json.husky = {
       "hooks": {
-        "pre-push": "if git-branch-is -q master; then npm run lint:prettier && npm run lint:lint; fi",
+        "pre-push": "if git-branch-is -q master; then npm run lint:prettier && npm run lint:lint && npm run lint:styles; fi",
       }
     };
     host.overwrite(path, JSON.stringify(json, null, 2));
