@@ -1,6 +1,7 @@
 # auto-generated files
 /angular.json
 /package-lock.json
+/package.json
 .idea/
 coverage/
 node_modules/

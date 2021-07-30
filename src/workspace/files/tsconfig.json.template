@@ -1,4 +1,5 @@
 {
+  "extends": "@angular-ru/typescript/tsconfig.json",
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
@@ -20,7 +21,8 @@
     "noUnusedParameters": true,
     "importHelpers": true,
     "strict": true,
-    "target": "es2015",
+    "target": "es2017",
+    "allowUnreachableCode": false,
     "lib": [
       "es2018",
       "dom"
