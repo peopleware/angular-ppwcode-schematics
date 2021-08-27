@@ -93,6 +93,25 @@ function addDependenciesToPackageJson() {
         type: NodeDependencyType.Dev,
         name: 'stylelint-config-standard',
         version: '22.0.0'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/common',
+        version: '15.311.0'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/eslint-config-enterprise',
+        version: '12.4.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/prettier',
+        version: '12.2.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/typescript',
       }
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
