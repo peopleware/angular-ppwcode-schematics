@@ -1,0 +1,10 @@
+{
+    "extends": "@angular-ru/eslint-config-enterprise",
+    "overrides": [
+        {
+            "files": ["index.html"],
+            "extends": ["plugin:@angular-eslint/template/recommended"],
+            "rules": {}
+        }
+    ]
+}

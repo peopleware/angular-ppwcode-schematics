@@ -73,7 +73,7 @@ function modifyWorkspace(options: ApplicationOptions) {
     addBuildOptions(project);
     moveBudgets(project);
     configureBuildConfigurations(project);
-    configureTsLint(project);
+    configureEsLint(project);
     addTestOptions(project);
     removeProductionConfiguration(project);
   });
@@ -186,20 +186,17 @@ function configureBuildConfigurations(project: ProjectDefinition) {
   delete buildTarget.defaultConfiguration; // There is no production configuration (the default is no configuration, only overrideable by the development configuration)
 }
 
-function configureTsLint(project: ProjectDefinition) {
-  const tsLintTargetDefinition: TargetDefinition = {
-    builder: '@angular-devkit/build-angular:tslint',
+function configureEsLint(project: ProjectDefinition) {
+  const esLintTargetDefinition: TargetDefinition = {
+    builder: '@angular-eslint/builder:lint',
     options: {
-      tsConfig: [
-        'tsconfig.app.json',
-        'tsconfig.spec.json'
-      ],
-      exclude: [
-        '**/node_modules/**'
+      lintFilePatterns: [
+        "src/**/*.ts",
+        "src/**/*.html"
       ]
     }
   }
-  project.targets.set('lint', tsLintTargetDefinition);
+  project.targets.set('lint', esLintTargetDefinition);
 }
 
 function addDependenciesToPackageJson() {
@@ -212,23 +209,33 @@ function addDependenciesToPackageJson() {
       },
       {
         type: NodeDependencyType.Dev,
-        name: 'angular-tslint-rules',
-        version: '1.20.4',
+        name: '@ngxs/devtools-plugin',
+        version: '3.7.2'
       },
       {
         type: NodeDependencyType.Dev,
-        name: 'tslint-config-prettier',
-        version: '1.18.0',
+        name: '@angular-eslint/builder',
+        version: '12.3.1'
       },
       {
         type: NodeDependencyType.Dev,
-        name: 'tslint',
-        version: '6.1.3',
+        name: '@angular-eslint/eslint-plugin',
+        version: '12.3.1'
       },
       {
         type: NodeDependencyType.Dev,
-        name: 'codelyzer',
-        version: '6.0.2',
+        name: '@angular-eslint/eslint-plugin-template',
+        version: '12.3.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-eslint/schematics',
+        version: '12.3.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-eslint/template-parser',
+        version: '12.3.1'
       },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
