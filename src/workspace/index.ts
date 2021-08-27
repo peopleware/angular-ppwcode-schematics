@@ -140,6 +140,7 @@ function updateScriptsToPackageJson(): Rule {
         "pre-push": "if git-branch-is -q master; then npm run lint:prettier && npm run lint:lint && npm run lint:styles; fi",
       }
     };
+    json.prettier = "@angular-ru/prettier"
     host.overwrite(path, JSON.stringify(json, null, 2));
 
     return host;
