@@ -7,8 +7,9 @@ import {
   move,
   Rule,
   SchematicsException,
-  Tree, url,
-} from '@angular-devkit/schematics';
+  Tree,
+  url
+} from "@angular-devkit/schematics";
 import {getWorkspace, updateWorkspace} from "@schematics/angular/utility/workspace";
 import {join, JsonObject, normalize} from "@angular-devkit/core";
 import { ProjectDefinition, TargetDefinition } from "@angular-devkit/core/src/workspace";
