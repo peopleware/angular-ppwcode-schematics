@@ -203,6 +203,51 @@ function addDependenciesToPackageJson() {
   return (host: Tree) => {
     [
       {
+        type: NodeDependencyType.Default,
+        name: '@angular/flex-layout',
+        version: '12.0.0-beta.34'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@angular/material',
+        version: '~12.2.0'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: 'joi',
+        version: '17.4.2'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngx-translate/core',
+        version: '^13.0.0'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngx-translate/http-loader',
+        version: '^6.0.0'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngxs/form-plugin',
+        version: '3.7.2'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngxs/router-plugin',
+        version: '3.7.2'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngxs/store',
+        version: '3.7.2'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngxs-labs/data',
+        version: '6.2.0'
+      },
+      {
         type: NodeDependencyType.Dev,
         name: 'karma-spec-reporter',
         version: '0.0.32',
