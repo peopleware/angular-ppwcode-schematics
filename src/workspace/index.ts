@@ -67,12 +67,12 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: 'prettier',
-        version: '2.0.5',
+        version: '2.3.2',
       },
       {
         type: NodeDependencyType.Dev,
         name: 'cross-env',
-        version: '7.0.2'
+        version: '7.0.3'
       },
       {
         type: NodeDependencyType.Dev,
