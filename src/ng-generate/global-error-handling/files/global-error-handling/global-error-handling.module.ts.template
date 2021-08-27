@@ -1,0 +1,13 @@
+import { ErrorHandler, ModuleWithProviders, NgModule, Type } from '@angular/core';
+
+@NgModule()
+export class GlobalErrorHandlingModule {
+  static forRoot<T extends ErrorHandler>(handlerType: Type<T>): ModuleWithProviders<GlobalErrorHandlingModule> {
+    return {
+      ngModule: GlobalErrorHandlingModule,
+      providers: [
+        { provide: ErrorHandler, useClass: handlerType }
+      ]
+    };
+  }
+}

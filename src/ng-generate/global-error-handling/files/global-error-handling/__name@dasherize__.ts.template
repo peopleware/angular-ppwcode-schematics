@@ -1,0 +1,11 @@
+import { ErrorHandler, Injectable } from '@angular/core';
+
+/**
+ * Handle any errors thrown by Angular application.
+ */
+ @Injectable()
+ export class <%= classify(name) %> extends ErrorHandler {
+   handleError(error: any): void {
+     super.handleError(error);
+   }
+ }
