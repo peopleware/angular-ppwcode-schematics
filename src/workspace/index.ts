@@ -112,6 +112,17 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: '@angular-ru/typescript',
+        version: '12.4.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@types/jasmine',
+        version: '3.8.2'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@types/jasminewd2',
+        version: '2.0.10'
       }
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
