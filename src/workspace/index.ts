@@ -67,12 +67,12 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: 'prettier',
-        version: '2.0.5',
+        version: '2.3.2',
       },
       {
         type: NodeDependencyType.Dev,
         name: 'cross-env',
-        version: '7.0.2'
+        version: '7.0.3'
       },
       {
         type: NodeDependencyType.Dev,
@@ -93,6 +93,36 @@ function addDependenciesToPackageJson() {
         type: NodeDependencyType.Dev,
         name: 'stylelint-config-standard',
         version: '22.0.0'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/common',
+        version: '15.311.0'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/eslint-config-enterprise',
+        version: '12.4.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/prettier',
+        version: '12.2.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@angular-ru/typescript',
+        version: '12.4.1'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@types/jasmine',
+        version: '3.8.2'
+      },
+      {
+        type: NodeDependencyType.Dev,
+        name: '@types/jasminewd2',
+        version: '2.0.10'
       }
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
@@ -121,6 +151,7 @@ function updateScriptsToPackageJson(): Rule {
         "pre-push": "if git-branch-is -q master; then npm run lint:prettier && npm run lint:lint && npm run lint:styles; fi",
       }
     };
+    json.prettier = "@angular-ru/prettier"
     host.overwrite(path, JSON.stringify(json, null, 2));
 
     return host;
