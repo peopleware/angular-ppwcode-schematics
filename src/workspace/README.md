@@ -27,7 +27,7 @@ After that we add some extra files to our newly created workspace:
 
 * `.nvmrc`
 * `.prettierignore`
-* `.prettierrc`
+* `.prettierrc.js`
 
 And finally, we override `tsconfig.json`.
 
@@ -40,29 +40,9 @@ And finally, we override `tsconfig.json`.
   * This file defines the node version to be used for this project.
   In combination with NVM/AVN or similar version managers, it allows all developers to be sure they are running the same
   version of Node.
-* `.prettierrc`
+* `.prettierrc.js`
   * Configuration for [Prettier](https://prettier.io/). Support for Prettier is built right into all JetBrains IDE's,
   this config file will make sure everyone is using the same settings.
 * `.prettierignore`
   * There are some files and folders we _don't_ want Prettier to format; these are defined here.
 
-####Overridden:
-* `tsconfig.json`
-  * Overrides the default Angular `tsconfig.json` with a version that has the following options enabled:
-    *   | Option                  | Description                                                                                                                              |
-        | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-        | `diagnostics`           | Will output compiler performance information after building                                                                              |
-        | `incremental`           | Allows incremental compilation of projects.                                                                                              |
-        | `listFiles`             | Prints all the files read during compilation.                                                                                            |
-        | `listEmittedFiles`      | Prints the names of emitted files after a compilation.                                                                                   |
-        | `noUnusedLocals`        |Will throw error if a local variable is never read.                                                                                       |
-        | `noUnusedParameters`    | Will throw error if a function parameter is never read.                                                                                  |
-        | `fullTemplateTypeCheck` | Enables the binding expression validation phase of the Angular template compiler, which uses TypeScript to validate binding expressions. |
-  
-
-
-  
-######Note
-We are considering switching from a full override of the `tsconfig.json` to an approach where we base ourselves on a 
-known-good config (angular-ru for example) and then extend the file with settings we want to override.
-This would minimize the maintenance required, but has not yet been implemented.
