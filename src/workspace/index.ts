@@ -67,7 +67,7 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: 'prettier',
-        version: '2.3.2',
+        version: '2.6.2',
       },
       {
         type: NodeDependencyType.Dev,
@@ -77,7 +77,7 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: 'husky',
-        version: '4.3.0'
+        version: '7.0.4'
       },
       {
         type: NodeDependencyType.Dev,
@@ -87,17 +87,17 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: 'stylelint',
-        version: '13.13.1'
+        version: '14.6.1'
       },
       {
         type: NodeDependencyType.Dev,
         name: 'stylelint-config-standard',
-        version: '22.0.0'
+        version: '25.0.0'
       },
       {
         type: NodeDependencyType.Dev,
         name: '@types/jasmine',
-        version: '3.8.2'
+        version: '4.0.2'
       },
       {
         type: NodeDependencyType.Dev,

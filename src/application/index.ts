@@ -213,12 +213,12 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Default,
         name: '@angular/material',
-        version: '~12.2.0'
+        version: '~13.3.2'
       },
       {
         type: NodeDependencyType.Default,
         name: 'joi',
-        version: '17.4.2'
+        version: '17.6.0'
       },
       {
         type: NodeDependencyType.Default,
@@ -233,17 +233,17 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Default,
         name: '@ngxs/form-plugin',
-        version: '3.7.2'
+        version: '3.7.3'
       },
       {
         type: NodeDependencyType.Default,
         name: '@ngxs/router-plugin',
-        version: '3.7.2'
+        version: '3.7.3'
       },
       {
         type: NodeDependencyType.Default,
         name: '@ngxs/store',
-        version: '3.7.2'
+        version: '3.7.3'
       },
       {
         type: NodeDependencyType.Default,
@@ -258,32 +258,32 @@ function addDependenciesToPackageJson() {
       {
         type: NodeDependencyType.Dev,
         name: '@ngxs/devtools-plugin',
-        version: '3.7.2'
+        version: '3.7.3'
       },
       {
         type: NodeDependencyType.Dev,
         name: '@angular-eslint/builder',
-        version: '12.3.1'
+        version: '13.2.0'
       },
       {
         type: NodeDependencyType.Dev,
         name: '@angular-eslint/eslint-plugin',
-        version: '12.3.1'
+        version: '13.2.0'
       },
       {
         type: NodeDependencyType.Dev,
         name: '@angular-eslint/eslint-plugin-template',
-        version: '12.3.1'
+        version: '13.2.0'
       },
       {
         type: NodeDependencyType.Dev,
         name: '@angular-eslint/schematics',
-        version: '12.3.1'
+        version: '13.2.0'
       },
       {
         type: NodeDependencyType.Dev,
         name: '@angular-eslint/template-parser',
-        version: '12.3.1'
+        version: '13.2.0'
       },
     ].forEach(dependency => addPackageJsonDependency(host, dependency));
 
