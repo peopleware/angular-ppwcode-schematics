@@ -207,11 +207,6 @@ function addDependenciesToPackageJson() {
     [
       {
         type: NodeDependencyType.Default,
-        name: '@angular/flex-layout',
-        version: '12.0.0-beta.34'
-      },
-      {
-        type: NodeDependencyType.Default,
         name: '@angular/material',
         version: '~13.3.2'
       },
