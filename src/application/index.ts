@@ -247,8 +247,18 @@ function addDependenciesToPackageJson() {
       },
       {
         type: NodeDependencyType.Default,
-        name: '@ngxs-labs/data',
-        version: '6.2.0'
+        name: '@ngxs-labs/dispatch-decorator',
+        version: '4.0.2'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngxs-labs/emitter',
+        version: '4.0.0'
+      },
+      {
+        type: NodeDependencyType.Default,
+        name: '@ngxs-labs/select-snapshot',
+        version: '4.0.0'
       },
       {
         type: NodeDependencyType.Dev,
