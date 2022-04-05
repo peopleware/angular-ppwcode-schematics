@@ -13,7 +13,7 @@ import {
 import {getWorkspace, updateWorkspace} from "@schematics/angular/utility/workspace";
 import {join, JsonObject, normalize} from "@angular-devkit/core";
 import { ProjectDefinition, TargetDefinition } from "@angular-devkit/core/src/workspace";
-import {cloneDeep} from "lodash";
+import { camelCase, cloneDeep, kebabCase } from 'lodash';
 import {relativePathToWorkspaceRoot} from "@schematics/angular/utility/paths";
 import {MergeStrategy} from "@angular-devkit/schematics/src/tree/interface";
 import {addPackageJsonDependency, NodeDependencyType} from "@schematics/angular/utility/dependencies";
@@ -47,6 +47,8 @@ export default function(options: ApplicationOptions): Rule {
             relativePathToWorkspaceRoot: relativePathToWorkspaceRoot(appDir),
             appName: options.name,
             prefix: options.prefix,
+            kebabCasePrefix: kebabCase(options.prefix),
+            camelCasePrefix: camelCase(options.prefix)
           }),
           move(appDir),
         ]), MergeStrategy.AllowCreationConflict),
